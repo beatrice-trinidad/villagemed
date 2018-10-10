@@ -17,20 +17,20 @@
         <div class="row row-bottom-margin">
     <label for="staticName" class="col-md-5 col-form-label">Name</label>
     <div class="col-md-7">
-      <input type="text" readonly class="form-control-plaintext" id="staticName" value="<?php echo get_patient_by_ticket($_GET['ticket'])['fname'] ?>">
+      <input type="text" readonly class="form-control-plaintext" id="staticName" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['fname'] ?>">
     </div>
   </div>
   <div class="row row-bottom-margin">
     <label for="staticGender" class="col-md-5 col-form-label">Gender</label>
     <div class="col-md-7">
-      <input type="text" readonly class="form-control-plaintext" id="staticGender" value="<?php echo get_patient_by_ticket($_GET['ticket'])['gender'] ?>">
+      <input type="text" readonly class="form-control-plaintext" id="staticGender" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['gender'] ?>">
     </div>
   </div>
 
   <div class="row row-bottom-margin">
     <label for="staticAge" class="col-md-5 col-form-label">Age</label>
     <div class="col-md-7">
-      <input type="text" readonly class="form-control-plaintext" id="staticAge" value="<?php echo get_patient_by_ticket($_GET['ticket'])['age'] ?>">
+      <input type="text" readonly class="form-control-plaintext" id="staticAge" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['age'] ?>">
     </div>
   </div>
 </div>
@@ -39,19 +39,19 @@
   <div class="row row-bottom-margin">
 <label for="staticEmail" class="col-md-4 col-form-label">G.Name</label>
 <div class="col-md-8">
-<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php ?>">
+<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['GRname'] ?>">
 </div>
 </div>
 <div class="row row-bottom-margin">
 <label for="staticEmail" class="col-md-4 col-form-label">G.Email</label>
 <div class="col-md-8">
-<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php ?>">
+<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['GRemail'] ?>">
 </div>
 </div>
 <div class="row row-bottom-margin">
 <label for="staticEmail" class="col-md-4 col-form-label">G.Phone</label>
 <div class="col-md-8">
-<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php ?>">
+<input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['GRphone'] ?>">
 </div>
 </div>
 

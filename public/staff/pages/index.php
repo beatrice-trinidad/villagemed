@@ -2,9 +2,9 @@
 <?php
 if(is_post_request()){
   if(isset($_POST['ticket'])){
-    $check_in_patient = get_patient_by_id($_POST['id']);
+    $check_in_patient = get_patient_by_uid(get_uid_by_id($_POST['id']));
     $check_in_patient['ticket'] = $_POST['ticket'];
-    check_in_patient($check_in_patient);
+    check_in_patient($check_in_patient, get_uid_by_id($_POST['id']));
     header("Location: /villagemed-master/public/staff/index.php");
   }
   $fname = $_POST['fname'];

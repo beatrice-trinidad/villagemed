@@ -1,5 +1,14 @@
 <?php
-require_once('../private/initialize.php');?>
+require_once('../private/initialize.php');
+if(is_post_request()){
+  if(login_user() == 1){
+    header("Location: /villagemed-master/public/staff/index.php");
+  }
+  else{
+    //echo "LOGIN FAILED";
+  }
+}
+?>
 <html lang="en">
 <head>
     <!-- Standard Meta -->
@@ -24,7 +33,7 @@ require_once('../private/initialize.php');?>
           </nav>
           <br>
           <br>
-        <form class="form-horizontal" role="form" method="POST" action="<?php echo url_for('/staff/index.php');?>">
+        <form class="form-horizontal" role="form" method="POST" >
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -88,6 +97,7 @@ require_once('../private/initialize.php');?>
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <button type="submit" class="btn btn-danger"><i class="fa fa-sign-in"></i> Login</button>
+                    <a class="btn btn-link text-warning" href="./newuser.php">Register New User</a>
                     <a class="btn btn-link text-warning" href="#">Forgot Your Password?</a>
                 </div>
             </div>

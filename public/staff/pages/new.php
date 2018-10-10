@@ -23,8 +23,9 @@ if(is_post_request()) {
   else{
     $patient['gender'] = "Other";
   }
-  $insert_result = insert_patient($patient);
-  $check_in_result = check_in_patient($patient);
+  $uid = uniqid();
+  $insert_result = insert_patient($patient, $uid);
+  $check_in_result = check_in_patient($patient, $uid);
   if($insert_result && $check_in_result) {
     //echo 'no error';
     header("Location: /villagemed-master/public/staff/index.php");

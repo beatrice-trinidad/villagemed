@@ -52,15 +52,109 @@ function filter_patients($fname, $lname){
     return $result;
   }
 }
-function get_patient_by_id($id){
-  $sql = "SELECT * FROM patientinfo ";
-  $sql .= "WHERE id='" . $id . "'";
+function get_pinfo_by_uid($uid){
+  $sql = "SELECT * FROM pinfo ";
+  $sql .= "WHERE uid='" . $uid . "'";
   $result = mysqli_query(db_connect(), $sql);
   $patient = mysqli_fetch_assoc($result);
   return $patient;
 }
+function insert_prescription($id){
+  $uid = get_uid_by_id($id);
+  $sql = "UPDATE pinfo SET ";
+  $sql .= "treatment_plan = '". $_POST['treatment_plan'] . "',";
+  $sql .= "drug_name = '". $_POST['drug_name']. "',";
+  $sql .= "dosage = '". $_POST['dosage']. "',";
+  $sql .= "quantity = '". $_POST['quantity']. "'";
+  $sql .= "WHERE uid='" . $uid . "'";
+  $result = mysqli_query(db_connect(), $sql);
+  return $result;
+}
+function insert_pvitals($id, $any_treatment, $treatment_helpful){
+  $uid = get_uid_by_id($id);
+  $sql = "INSERT INTO pinfo ";
+  $sql .= "(uid, body_temp, weight, height, rr, bp, pulse, problem, length_of_problem, any_treatment, current_treatment, treatment_helpful, immunization_history, allergy_history, past_diseases) ";
+  $sql .= "VALUES (";
+  $sql .= "'". $uid . "',";
+  $sql .= "'". $_POST['body_temp'] . "',";
+  $sql .= "'". $_POST['weight']. "',";
+  $sql .= "'". $_POST['height']. "',";
+  $sql .= "'". $_POST['rr']. "',";
+  $sql .= "'". $_POST['bp']. "',";
+  $sql .= "'". $_POST['pulse']. "',";
+  $sql .= "'". $_POST['problem']. "',";
+  $sql .= "'". $_POST['length_of_problem']. "',";
+  $sql .= "'". $any_treatment. "',";
+  $sql .= "'". $_POST['current_treatment']. "',";
+  $sql .= "'". $treatment_helpful. "',";
+  $sql .= "'". $_POST['immunization_history']. "',";
+  $sql .= "'". $_POST['allergy_history']. "',";
+  $sql .= "'". $_POST['past_diseases']. "'";
+  $sql .= ")";
+  $result = mysqli_query(db_connect(), $sql);
+  return $result;
+}
+function insert_pexam($id, $general_ros_positive, $general_ros_negative, $general_ros_comments, $ophthalmic_ros_positive, $ophthalmic_ros_negative, $ophthalmic_ros_comments, $ent_ros_positive, $ent_ros_negative, $ent_ros_comments, $respiratory_ros_positive, $respiratory_ros_negative, $respiratory_ros_comments, $cardiovascular_ros_positive, $cardiovascular_ros_negative, $cardiovascular_ros_comments, $gastrointestinal_ros_positive, $gastrointestinal_ros_negative, $gastrointestinal_ros_comments, $urinary_ros_positive, $urinary_ros_negative, $urinary_ros_comments, $musculoskeleton_ros_positive, $musculoskeleton_ros_negative, $musculoskeleton_ros_comments, $neurological_ros_positive, $neurological_ros_negative, $neurological_ros_comments, $dermatological_ros_positive, $dermatological_ros_negative, $dermatological_ros_comments) {
+  $uid = get_uid_by_id($id);
+  $sql = "UPDATE pinfo SET ";
+  $sql .= "general_ros_positive = '". $general_ros_positive . "',";
+  $sql .= "general_ros_negative = '". $general_ros_negative . "',";
+  $sql .= "general_ros_comments = '". $general_ros_comments . "',";
+  $sql .= "ophthalmic_ros_positive = '". $ophthalmic_ros_positive . "',";
+  $sql .= "ophthalmic_ros_negative = '". $ophthalmic_ros_negative . "',";
+  $sql .= "ophthalmic_ros_comments = '". $ophthalmic_ros_comments . "',";
+  $sql .= "ent_ros_positive = '". $ent_ros_positive . "',";
+  $sql .= "ent_ros_negative = '". $ent_ros_negative . "',";
+  $sql .= "ent_ros_comments = '". $ent_ros_comments . "',";
+  $sql .= "respiratory_ros_positive = '". $respiratory_ros_positive . "',";
+  $sql .= "respiratory_ros_negative = '". $respiratory_ros_negative . "',";
+  $sql .= "respiratory_ros_comments = '". $respiratory_ros_comments . "',";
+  $sql .= "cardiovascular_ros_positive = '". $cardiovascular_ros_positive . "',";
+  $sql .= "cardiovascular_ros_negative = '". $cardiovascular_ros_negative . "',";
+  $sql .= "cardiovascular_ros_comments = '". $cardiovascular_ros_comments . "',";
+  $sql .= "gastrointestinal_ros_positive = '". $gastrointestinal_ros_positive . "',";
+  $sql .= "gastrointestinal_ros_negative = '". $gastrointestinal_ros_negative . "',";
+  $sql .= "gastrointestinal_ros_comments = '". $gastrointestinal_ros_comments . "',";
+  $sql .= "urinary_ros_positive = '". $urinary_ros_positive . "',";
+  $sql .= "urinary_ros_negative = '". $urinary_ros_negative . "',";
+  $sql .= "urinary_ros_comments = '". $urinary_ros_comments . "',";
+  $sql .= "musculoskeleton_ros_positive = '". $musculoskeleton_ros_positive . "',";
+  $sql .= "musculoskeleton_ros_negative = '". $musculoskeleton_ros_negative . "',";
+  $sql .= "musculoskeleton_ros_comments = '". $musculoskeleton_ros_comments . "',";
+  $sql .= "neurological_ros_positive = '". $neurological_ros_positive . "',";
+  $sql .= "neurological_ros_negative = '". $neurological_ros_negative . "',";
+  $sql .= "neurological_ros_comments = '". $neurological_ros_comments . "',";
+  $sql .= "dermatological_ros_positive = '". $dermatological_ros_positive . "',";
+  $sql .= "dermatological_ros_negative = '". $dermatological_ros_negative . "',";
+  $sql .= "dermatological_ros_comments = '". $dermatological_ros_comments . "'";
+  $sql .= "WHERE uid='" . $uid . "'";
+  $result = mysqli_query(db_connect(), $sql);
+  return $result;
+}
+function login_user(){
+  $sql = "SELECT * FROM staff ";
+  $sql .= "WHERE email = '" .$_POST['email'] ."' and password = '" .$_POST['password'] ."'";
+  $result = mysqli_query(db_connect(), $sql);
+  $count = mysqli_num_rows($result);
+  return $count;
+}
+function register_new_user(){
+  $sql = "INSERT INTO staff ";
+  $sql .= "(uid, fname, lname, email, password, role, nationality)";
+  $sql .= "VALUES(";
+  $sql .= "'". uniqid() . "',";
+  $sql .= "'". $_POST['fname'] . "',";
+  $sql .= "'". $_POST['lname']  . "',";
+  $sql .= "'". $_POST['email_address']  . "',";
+  $sql .= "'". $_POST['password_']  . "',";
+  $sql .= "'". $_POST['role']  . "',";
+  $sql .= "'". $_POST['nationality']  . "'";
+  $sql .= ")";
+  $result = mysqli_query(db_connect(), $sql);
+  return $result;
+}
 function get_patient_by_ticket($ticket){
-  $sql = "SELECT * FROM patientinfo ";
+  $sql = "SELECT * FROM pvisit ";
   $sql .= "WHERE ticket='" . $ticket . "'";
   $result = mysqli_query(db_connect(), $sql);
   $patient = mysqli_fetch_assoc($result);
@@ -108,8 +202,21 @@ $errors[] = "Visible must be true or false.";
   return $errors;
 }
 
-
-function insert_patient($patient){
+function get_uid_by_id($id){
+  $sql = "SELECT uid FROM pvisit ";
+  $sql .= "WHERE pid='" . $id . "'";
+  $result = mysqli_query(db_connect(), $sql);
+  $row = mysqli_fetch_assoc($result);
+  return $row['uid'];
+}
+function get_patient_by_uid($uid){
+  $sql = "SELECT * FROM patientinfo ";
+  $sql .= "WHERE uid='" . $uid . "'";
+  $result = mysqli_query(db_connect(), $sql);
+  $patient = mysqli_fetch_assoc($result);
+  return $patient;
+}
+function insert_patient($patient, $uid){
   if(count(validate_patient($patient)) > 0){
     //echo "there are errors the count is " . count(validate_patient($patient));
     //print_r(validate_patient($patient));
@@ -118,8 +225,9 @@ function insert_patient($patient){
     //echo "there are no errors";
   }
   $sql = "INSERT INTO patientinfo ";
-  $sql .= "(fname, lname, gender, dob, age, GRname, GRemail, GRphone) ";
+  $sql .= "(uid, fname, lname, gender, dob, age, GRname, GRemail, GRphone) ";
   $sql .= "VALUES (";
+  $sql .= "'". $uid . "',";
   $sql .= "'". $patient['fname'] . "',";
   $sql .= "'". $patient['lname']. "',";
   $sql .= "'". $patient['gender']. "',";
@@ -132,12 +240,13 @@ function insert_patient($patient){
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
-function check_in_patient($patient){
+function check_in_patient($patient, $uid){
   date_default_timezone_set('Australia/Melbourne');
   $vdate = date('m/d/Y h:i:s a', time());
   $sql = "INSERT INTO pvisit ";
-  $sql .= "(vdate, fname, age, ticket, checkin, vitals, exam, prescription, dispense) ";
+  $sql .= "(uid, vdate, fname, age, ticket, checkin, vitals, exam, prescription, dispense) ";
   $sql .= "VALUES (";
+  $sql .= "'". $uid . "',";
   $sql .= "'". $vdate . "',";
   $sql .= "'". $patient['fname'] . "',";
   $sql .= "'". $patient['age'] . "',";

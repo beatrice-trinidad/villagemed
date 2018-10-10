@@ -26,7 +26,7 @@ if(is_post_request()) {
   }
 }
 else{
-  $patient = find_patient_by_id($id);
+  $patient = get_patient_by_uid(get_uid_by_id($id));
 }
 ?>
 
@@ -35,7 +35,7 @@ else{
 
 <div id="content">
 
-  
+
 
   <div class="page edit">
     <h1>Edit Page</h1>
