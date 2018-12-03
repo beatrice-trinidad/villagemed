@@ -1,5 +1,15 @@
-<?php require_once('../../private/initialize.php'); ?>
-
+<?php require_once('../../private/initialize.php');
+if(date('H') == 0 && date('i') == 0) {
+    if(save_pinfo() == 1){
+      clear_pinfo();
+      clear_pvisit();
+    }
+}
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
+?>
 <?php $page_title = 'Staff Menu'; ?>
 <?php include(SHARED_PATH . '/home_header.php'); ?>
 <?php $patient_set = find_pvisit_patients(); ?>
@@ -97,7 +107,5 @@
 </div><!--col -->
 </div><!--row-->
 </div><!-- fluid-container-->
-
-
 </body>
 </html>

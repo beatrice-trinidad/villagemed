@@ -58,7 +58,9 @@
 </div>
 
 <div class = " container col-md-3">
-    <img src = "../../../public/images/person.png">
+    <?php
+      echo '<img style="object-fit: cover;" width="200" height="200" src="data:image/png;base64,'.base64_encode(get_patient_image(get_uid_by_id($_GET['id']))).'"/>';
+    ?>
 </div>
       </div>
   </div><!--col-md-10-->

@@ -23,6 +23,17 @@ function number_of_patients_seen(){
   }
   return $count;
 }
+function increment_total_seen(){
+  $sql = "SELECT total_seen FROM village_med_stats WHERE id = '1'";
+  $result = mysqli_query(dbx_connect(), $sql);
+  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+  $current = intval($row['total_seen']);
+  $current++;
+  $sql = "UPDATE village_med_stats SET ";
+  $sql .= "total_seen = " . $current . " WHERE id = '1'";
+  $result2 = mysqli_query(db_connect(), $sql);
+  return $result2;
+}
 function find_pvisit_patients(){
   $sql = "SELECT * FROM pvisit ORDER BY pid ASC";
   $result = mysqli_query(db_connect(), $sql);
@@ -36,12 +47,16 @@ function filter_patients($fname, $lname){
     $sql = "SELECT * FROM patientinfo ";
     $sql .= "WHERE fname='" .$fname ."'";
     $result = mysqli_query(db_connect(), $sql);
+    $count = mysqli_num_rows($result);
+    if($count == 0) return NULL;
     return $result;
   }
   else if($fname == ""){
     $sql = "SELECT * FROM patientinfo ";
     $sql .= "WHERE lname='" .$lname ."'";
     $result = mysqli_query(db_connect(), $sql);
+    $count = mysqli_num_rows($result);
+    if($count == 0) return NULL;
     return $result;
   }
   else{
@@ -49,6 +64,8 @@ function filter_patients($fname, $lname){
     $sql .= "WHERE fname='" .$fname ."'";
     $sql .= "AND lname='" .$lname ."'";
     $result = mysqli_query(db_connect(), $sql);
+    $count = mysqli_num_rows($result);
+    if($count == 0) return NULL;
     return $result;
   }
 }
@@ -72,8 +89,9 @@ function insert_prescription($id){
 }
 function insert_pvitals($id, $any_treatment, $treatment_helpful){
   $uid = get_uid_by_id($id);
+  $vdate = date('m/d/Y h:i:s a', time());
   $sql = "INSERT INTO pinfo ";
-  $sql .= "(uid, body_temp, weight, height, rr, bp, pulse, problem, length_of_problem, any_treatment, current_treatment, treatment_helpful, immunization_history, allergy_history, past_diseases) ";
+  $sql .= "(uid, body_temp, weight, height, rr, bp, pulse, problem, length_of_problem, any_treatment, current_treatment, treatment_helpful, vdate) ";
   $sql .= "VALUES (";
   $sql .= "'". $uid . "',";
   $sql .= "'". $_POST['body_temp'] . "',";
@@ -87,10 +105,18 @@ function insert_pvitals($id, $any_treatment, $treatment_helpful){
   $sql .= "'". $any_treatment. "',";
   $sql .= "'". $_POST['current_treatment']. "',";
   $sql .= "'". $treatment_helpful. "',";
-  $sql .= "'". $_POST['immunization_history']. "',";
-  $sql .= "'". $_POST['allergy_history']. "',";
-  $sql .= "'". $_POST['past_diseases']. "'";
+  $sql .= "'". $vdate. "'";
   $sql .= ")";
+  $result = mysqli_query(db_connect(), $sql);
+  update_history($uid, $_POST['immunization_history'], $_POST['allergy_history'], $_POST['past_diseases']);
+  return $result;
+}
+function update_history($uid, $immunizations, $allergies, $past_diseases){
+  $sql = "UPDATE patientinfo SET ";
+  $sql .= "immunizations = '". $immunizations . "',";
+  $sql .= "allergies = '". $allergies . "',";
+  $sql .= "past_diseases = '". $past_diseases . "'";
+  $sql .= "WHERE uid='" . $uid . "'";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
@@ -209,6 +235,13 @@ function get_uid_by_id($id){
   $row = mysqli_fetch_assoc($result);
   return $row['uid'];
 }
+function get_puid_by_id($id){
+  $sql = "SELECT uid FROM patientinfo ";
+  $sql .= "WHERE id='" . $id . "'";
+  $result = mysqli_query(db_connect(), $sql);
+  $row = mysqli_fetch_assoc($result);
+  return $row['uid'];
+}
 function get_patient_by_uid($uid){
   $sql = "SELECT * FROM patientinfo ";
   $sql .= "WHERE uid='" . $uid . "'";
@@ -216,16 +249,28 @@ function get_patient_by_uid($uid){
   $patient = mysqli_fetch_assoc($result);
   return $patient;
 }
-function insert_patient($patient, $uid){
-  if(count(validate_patient($patient)) > 0){
-    //echo "there are errors the count is " . count(validate_patient($patient));
-    //print_r(validate_patient($patient));
-  }
-  else{
-    //echo "there are no errors";
-  }
+function save_pinfo(){
+  $sql = "INSERT INTO visit_history SELECT * FROM pinfo";
+  $result = mysqli_query(db_connect(), $sql);
+}
+function clear_pinfo(){
+  $sql = "DELETE FROM pinfo";
+  $result = mysqli_query(db_connect(), $sql);
+}
+function clear_pvisit(){
+  $sql = "DELETE FROM pvisit";
+  $result = mysqli_query(db_connect(), $sql);
+}
+function get_patient_image($uid){
+  $sql = "SELECT patient_image_content FROM patientinfo ";
+  $sql .= "WHERE uid='" . $uid . "'";
+  $result = mysqli_query(db_connect(), $sql);
+  $row = mysqli_fetch_assoc($result);
+  return $row['patient_image_content'];
+}
+function insert_patient($patient, $uid, $image_content){
   $sql = "INSERT INTO patientinfo ";
-  $sql .= "(uid, fname, lname, gender, dob, age, GRname, GRemail, GRphone) ";
+  $sql .= "(uid, fname, lname, gender, dob, age, GRname, GRemail, GRphone, patient_image_content) ";
   $sql .= "VALUES (";
   $sql .= "'". $uid . "',";
   $sql .= "'". $patient['fname'] . "',";
@@ -235,19 +280,18 @@ function insert_patient($patient, $uid){
   $sql .= "'". $patient['age']. "',";
   $sql .= "'". $patient['GRname']. "',";
   $sql .= "'". $patient['GRemail']. "',";
-  $sql .= "'". $patient['GRphone']. "'";
+  $sql .= "'". $patient['GRphone']. "',";
+  $sql .= "'". $image_content. "'";
   $sql .= ")";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
 function check_in_patient($patient, $uid){
   date_default_timezone_set('Australia/Melbourne');
-  $vdate = date('m/d/Y h:i:s a', time());
   $sql = "INSERT INTO pvisit ";
-  $sql .= "(uid, vdate, fname, age, ticket, checkin, vitals, exam, prescription, dispense) ";
+  $sql .= "(uid, fname, age, ticket, checkin, vitals, exam, prescription, dispense) ";
   $sql .= "VALUES (";
   $sql .= "'". $uid . "',";
-  $sql .= "'". $vdate . "',";
   $sql .= "'". $patient['fname'] . "',";
   $sql .= "'". $patient['age'] . "',";
   $sql .= "'". $patient['ticket'] . "',";

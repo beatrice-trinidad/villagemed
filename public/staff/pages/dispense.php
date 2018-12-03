@@ -1,11 +1,17 @@
-<?php require_once('../../../private/initialize.php'); ?>
+<?php require_once('../../../private/initialize.php');
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
+?>
 
 
 <?php include(SHARED_PATH . '/pInfo_header.php'); ?>
 <?php
   if(is_post_request()){
     update_patient_status("dispense", $_GET['id']);
-    header("Location: /villagemed-master/public/staff/index.php");
+    increment_total_seen();
+    header("Location: /public/staff/index.php");
   }
 ?>
 <div class = "container-fluid">

@@ -1,7 +1,10 @@
 <?php
 
 require_once('../../../private/initialize.php');
-
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
 if(!isset($_GET['id'])) {
   redirect_to(url_for('/staff/pages/index.php'));
 }
@@ -26,7 +29,7 @@ if(is_post_request()) {
   }
 }
 else{
-  $patient = get_patient_by_uid(get_uid_by_id($id));
+  $patient = get_patient_by_uid(get_puid_by_id($id));
 }
 ?>
 

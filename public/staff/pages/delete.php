@@ -1,7 +1,10 @@
 <?php
 
 require_once('../../../private/initialize.php');
-
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
 if(!isset($_GET['id'])) {
   redirect_to(url_for('/staff/pages/index.php'));
 }

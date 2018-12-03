@@ -6,10 +6,12 @@ html {
 body {
   height: 100%;
   width: 100%;
-  font-size: 1.2em;
+  font-size: 1.0em;
   margin: 0;
   padding: 0;
+  background-color: #F1f0f0!important;
 }
+
 
 header {
   width: 980px;
@@ -50,6 +52,15 @@ header h1 {
   padding-bottom: 5px;
 }
 
+h5.checkin {
+  font-family: "Century Gothic", "CenturyGothic", "AppleGothic";
+  color: #EB012F;
+
+}
+
+
+
+
 #navbar {
   -webkit-box-shadow: -1px 7px 8px -1px rgba(179,179,179,0.63);
 -moz-box-shadow: -1px 7px 8px -1px rgba(179,179,179,0.63);
@@ -77,12 +88,19 @@ navigation ul li {
   margin-right: 1em;
 }
 
+a.nav-link.back {
+  color: #FFAB00 !important;
+}
+
+a#navbarDropdown {
+  color: #FFAB00 !important;
+}
+
 #content {
   width: 920px;
   min-height: 500px;
   padding: 0 30px;
 }
-
 
 
 /* Actions */
@@ -148,4 +166,22 @@ dd {
 .errors ul {
   margin-bottom: 0;
   padding-left: 1em;
+}
+
+/* Patient Queue */
+thead.pqueue-head {
+  background-color: #CECECE!important;
+}
+
+/* Check-In Patient */
+table.checkin {
+  font-size: 0.75rem;
+}
+
+thead.checkin {
+  background-color: #CECECE!important;
+}
+
+.search-patient {
+    background-color: #CECECE!important;
 }

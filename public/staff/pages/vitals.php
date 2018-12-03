@@ -1,4 +1,9 @@
-<?php require_once('../../../private/initialize.php'); ?>
+<?php require_once('../../../private/initialize.php');
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
+?>
 <?php include(SHARED_PATH . '/pInfo_header.php'); ?>
 <?php
   if(is_post_request()){
@@ -10,7 +15,7 @@
     if(isset($_POST['gridRadios4'])) $treatment_helpful = "N/A";
     insert_pvitals($_GET['id'], $any_treatment, $treatment_helpful);
     update_patient_status("vitals", $_GET['id']);
-    header("Location: /villagemed-master/public/staff/index.php");
+    header("Location: /public/staff/index.php");
   }
 ?>
 <script type="text/javascript">
@@ -191,17 +196,17 @@ function radio5(){
 <br>
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Immunizations</label>
-        <textarea class="form-control" name="immunization_history" id="exampleFormControlTextarea1" rows= "4"></textarea>
+        <textarea class="form-control" name="immunization_history" id="exampleFormControlTextarea1" rows= "4"><?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['immunizations']?></textarea>
       </div>
       <br>
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Allergies</label>
-        <textarea class="form-control" name="allergy_history" id="exampleFormControlTextarea1" rows = "4"></textarea>
+        <textarea class="form-control" name="allergy_history" id="exampleFormControlTextarea1" rows = "4"><?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['allergies']?></textarea>
       </div>
       <br>
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Past Diseases</label>
-        <textarea class="form-control" name="past_diseases" id="exampleFormControlTextarea1" rows = "4"></textarea>
+        <textarea class="form-control" name="past_diseases" id="exampleFormControlTextarea1" rows = "4"><?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['past_diseases']?></textarea>
       </div>
       <br>
 

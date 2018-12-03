@@ -1,4 +1,9 @@
-<?php require_once('../../../private/initialize.php'); ?>
+<?php require_once('../../../private/initialize.php');
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
+?>
 
 
 <?php include(SHARED_PATH . '/pInfo_header.php');
@@ -289,17 +294,17 @@
       <div id= "history" role="tabpanel" class="container tab-pane fade" style="border:1px solid #cecece;"><br>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Immunizations</label>
-          <textarea readonly class="form-control-plaintext" id="exampleFormControlTextarea1" placeholder="N/A" rows= "4"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['immunization_history']?></textarea>
+          <textarea readonly class="form-control-plaintext" id="exampleFormControlTextarea1" placeholder="N/A" rows= "4"><?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['immunizations']?></textarea>
         </div>
         <br>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Allergies</label>
-          <textarea readonly class="form-control-plaintext" id="exampleFormControlTextarea1" placeholder="N/A" rows = "4"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['allergy_history']?></textarea>
+          <textarea readonly class="form-control-plaintext" id="exampleFormControlTextarea1" placeholder="N/A" rows = "4"><?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['allergies']?></textarea>
         </div>
         <br>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Past Diseases</label>
-          <textarea readonly class="form-control-plaintext" id="exampleFormControlTextarea1" placeholder="N/A" rows = "4"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['past_diseases']?></textarea>
+          <textarea readonly class="form-control-plaintext" id="exampleFormControlTextarea1" placeholder="N/A" rows = "4"><?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['past_diseases']?></textarea>
         </div>
       </div><!-- history -->
       <div id= "ros" role="tabpanel" class = "container tab-pane fade" style="border:1px solid #cecece;"><br>

@@ -1,7 +1,10 @@
 <?php
 
 require_once('../../../private/initialize.php');
-
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
 if(is_post_request()) {
 
   // Handle form values sent by new.php

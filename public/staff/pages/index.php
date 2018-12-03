@@ -1,24 +1,11 @@
-<?php require_once('../../../private/initialize.php'); ?>
-<?php
-if(is_post_request()){
-  if(isset($_POST['ticket'])){
-    $check_in_patient = get_patient_by_uid(get_uid_by_id($_POST['id']));
-    $check_in_patient['ticket'] = $_POST['ticket'];
-    check_in_patient($check_in_patient, get_uid_by_id($_POST['id']));
-    header("Location: /villagemed-master/public/staff/index.php");
-  }
-  $fname = $_POST['fname'];
-  $lname = $_POST['lname'];
-  $patient_set = filter_patients($fname, $lname);
-}
-else{
-  $patient_set = find_all_patients();
+<?php require_once('../../../private/initialize.php');
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
 }
 ?>
-
 <?php $page_title = 'Pages'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
-
 <div class = "container h-100">
   <div class ="row h-100 justify-content-center">
     <div class = "col-md-12">
@@ -50,6 +37,33 @@ else{
           </fieldset>
         </form>
       </div>
+      <div id="alert1" class="alert alert-info" role="alert" style="display: none; margin-top: 5%;">
+        Patient not found
+      </div>
+      <script type="text/javascript">
+      function displayError1(){
+        document.getElementById("alert1").style.display = "block";
+      }
+      </script>
+      <?php
+      if(is_post_request()){
+        if(isset($_POST['ticket'])){
+          $check_in_patient = get_patient_by_uid(get_puid_by_id($_POST['id']));
+          $check_in_patient['ticket'] = $_POST['ticket'];
+          check_in_patient($check_in_patient, get_puid_by_id($_POST['id']));
+          header("Location: /public/staff/index.php");
+        }
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $patient_set = filter_patients($fname, $lname);
+        if($patient_set == NULL){
+          echo '<script type="text/javascript"> displayError1(); </script>';
+        }
+      }
+      else{
+        $patient_set = find_all_patients();
+      }
+      ?>
       <br>
       <div class="table-responsive">
         <table class="table">

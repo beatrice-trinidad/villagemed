@@ -1,13 +1,6 @@
 <?php
 require_once('../private/initialize.php');
-if(is_post_request()){
-  if(login_user() == 1){
-    header("Location: /villagemed-master/public/staff/index.php");
-  }
-  else{
-    //echo "LOGIN FAILED";
-  }
-}
+date_default_timezone_set("America/New_York");
 ?>
 <html lang="en">
 <head>
@@ -72,11 +65,13 @@ if(is_post_request()){
                                    placeholder="Password" required>
                         </div>
                     </div>
+                    <div id="alert1" class="alert alert-danger" role="alert" style="display: none; margin-top: 5%;">
+                      Your email/password combination is incorrect
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                        <!-- Put password error message here -->
                         </span>
                     </div>
                 </div>
@@ -103,5 +98,22 @@ if(is_post_request()){
             </div>
         </form>
     </div>
+<script type="text/javascript">
+function displayError1(){
+  document.getElementById('alert1').style.display = "block";
+}
+</script>
+<?php
+if(is_post_request()){
+  if(login_user() == 1){
+    session_start();
+    $_SESSION['user'] = 1;
+    header("Location: /public/staff/index.php");
+  }
+  else{
+    echo '<script type="text/javascript"> displayError1(); </script>';
+  }
+}
+?>
 </body>
 </html>

@@ -1,8 +1,12 @@
-<?php require_once('../../../private/initialize.php'); ?>
+<?php require_once('../../../private/initialize.php');
+session_start();
+if($_SESSION['user'] == NULL){
+  header("Location: /public");
+}
+?>
 
 <?php
-// $id = isset($_GET['id']) ? $_GET['id'] : '1';
-$id = $_GET['id'] ?? '1'; // PHP > 7.0
+$id = $_GET['id'] ?? '1';
 $patient = find_patient_by_id($id);
 ?>
 

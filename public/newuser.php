@@ -1,14 +1,5 @@
 <?php
 require_once('../private/initialize.php');
-if(is_post_request()){
-  if(strcmp($_POST['password_'], $_POST['password_confirmed']) == 0){
-     register_new_user();
-     header("Location: /villagemed-master/public");
-  }
-  else{
-
-  }
-}
 ?>
 <!doctype html>
 
@@ -22,7 +13,7 @@ if(is_post_request()){
     <!-- Site Properties -->
     <title>VillageMED</title>
     <!-- Stylesheets -->
-      <link rel="stylesheet" href="/villagemed/public/stylesheets/staff.css">
+    <link rel="stylesheet" href="/villagemed/public/stylesheets/staff.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="/villagemed/public/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -124,6 +115,25 @@ if(is_post_request()){
     <div class="mx-auto" id="operations">
     <span class="align-bottom">  <input  class = "action btn btn-block btn-danger" type="submit" value="Register New User" /></span>
     </div>
+    <div id="alert1" class="alert alert-danger" role="alert" style="display: none; margin-top: 5%;">
+      Passwords do not match
+    </div>
+    <script type="text/javascript">
+    function displayError1(){
+      document.getElementById("alert1").style.display = "block";
+    }
+    </script>
+    <?php
+    if(is_post_request()){
+      if(strcmp($_POST['password_'], $_POST['password_confirmed']) == 0){
+         register_new_user();
+         header("Location: /public");
+      }
+      else{
+        echo '<script type="text/javascript"> displayError1(); </script>';
+      }
+    }
+    ?>
   </div>
 </div><!--col-->
 </div><!--row-->
