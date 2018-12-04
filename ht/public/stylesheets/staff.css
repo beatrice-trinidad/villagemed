@@ -1,0 +1,187 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 1.0em;
+  margin: 0;
+  padding: 0;
+  background-color: #F1f0f0!important;
+}
+
+
+header {
+  width: 980px;
+  height: 50px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  background: #21CCB5;
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.form-check-label::before,
+.form-check-label::after {
+top: .8rem;
+width: 1.25rem;
+height: 1.25rem;
+}
+
+header h1 {
+  margin: 0;
+  padding: 5px;
+  font-size: 20px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+#heading {
+  font-family: "Century Gothic", "CenturyGothic", "AppleGothic";
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+  padding-bottom: 5px;
+}
+
+h5.checkin {
+  font-family: "Century Gothic", "CenturyGothic", "AppleGothic";
+  color: #EB012F;
+
+}
+
+
+
+
+#navbar {
+  -webkit-box-shadow: -1px 7px 8px -1px rgba(179,179,179,0.63);
+-moz-box-shadow: -1px 7px 8px -1px rgba(179,179,179,0.63);
+box-shadow: -1px 7px 8px -1px rgba(179,179,179,0.63);
+
+
+}
+
+navigation {
+  width: 980px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+navigation ul {
+  width: 980px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+navigation ul li {
+  display: inline;
+  margin-right: 1em;
+}
+
+a.nav-link.back {
+  color: #FFAB00 !important;
+}
+
+a#navbarDropdown {
+  color: #FFAB00 !important;
+}
+
+#content {
+  width: 920px;
+  min-height: 500px;
+  padding: 0 30px;
+}
+
+
+/* Actions */
+
+.actions {
+  margin-bottom: 1em;
+}
+.btn-xl {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 10px;
+    width:50%;
+    height: 100%;
+}
+.row-bottom-margin {
+  margin-bottom:-10px;
+}
+
+/* Lists */
+
+
+.table td {
+   text-align: center;
+}
+.table th {
+  text-align: center;
+}
+
+/* Forms */
+
+dl {
+  clear: both;
+  overflow: hidden;
+  margin: 0.5em 0;
+}
+
+dt {
+  float: left;
+  font-weight: bold;
+  width: 125px;
+}
+
+dd {
+  float: left;
+  margin-left: 1em;
+}
+
+#operations {
+  clear: both;
+  margin: 1em 0 1em 75px;
+}
+
+/* Errors */
+
+.errors {
+  display: inline-block;
+  border: 2px solid red;
+  color: red;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.errors ul {
+  margin-bottom: 0;
+  padding-left: 1em;
+}
+
+/* Patient Queue */
+thead.pqueue-head {
+  background-color: #CECECE!important;
+}
+
+/* Check-In Patient */
+table.checkin {
+  font-size: 0.75rem;
+}
+
+thead.checkin {
+  background-color: #CECECE!important;
+}
+
+.search-patient {
+    background-color: #CECECE!important;
+}
