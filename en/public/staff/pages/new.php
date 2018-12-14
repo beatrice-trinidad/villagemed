@@ -1,6 +1,7 @@
 <?php
 require_once('../../../private/initialize.php');
 session_start();
+$_SESSION['page'] = "register";
 if($_SESSION['user'] == NULL){
   header("Location: /en/public");
 }

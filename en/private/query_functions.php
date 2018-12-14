@@ -39,30 +39,14 @@ function find_pvisit_patients(){
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
-function filter_patients($fname, $lname){
-  if($fname == "" && $lname == ""){
+function filter_patients($search){
+  if($search == ""){
     return find_all_patients();
-  }
-  else if($lname == ""){
-    $sql = "SELECT * FROM patientinfo ";
-    $sql .= "WHERE fname='" .$fname ."'";
-    $result = mysqli_query(db_connect(), $sql);
-    $count = mysqli_num_rows($result);
-    if($count == 0) return NULL;
-    return $result;
-  }
-  else if($fname == ""){
-    $sql = "SELECT * FROM patientinfo ";
-    $sql .= "WHERE lname='" .$lname ."'";
-    $result = mysqli_query(db_connect(), $sql);
-    $count = mysqli_num_rows($result);
-    if($count == 0) return NULL;
-    return $result;
   }
   else{
     $sql = "SELECT * FROM patientinfo ";
-    $sql .= "WHERE fname='" .$fname ."'";
-    $sql .= "AND lname='" .$lname ."'";
+    $sql .= "WHERE INSTR('".$search."', fname) > 0 ";
+    $sql .= "OR INSTR('".$search."', lname) > 0";
     $result = mysqli_query(db_connect(), $sql);
     $count = mysqli_num_rows($result);
     if($count == 0) return NULL;
@@ -174,7 +158,7 @@ function register_new_user(){
   $sql .= "'". $_POST['email_address']  . "',";
   $sql .= "'". $_POST['password_']  . "',";
   $sql .= "'". $_POST['role']  . "',";
-  $sql .= "'". $_POST['nationality']  . "'";
+  $sql .= "'". $_POST['language']  . "'";
   $sql .= ")";
   $result = mysqli_query(db_connect(), $sql);
   return $result;

@@ -1,6 +1,8 @@
 <?php
 require_once('../private/initialize.php');
 date_default_timezone_set("America/New_York");
+session_start();
+$_SESSION['page'] = "login";
 ?>
 <html lang="en">
 <head>
@@ -17,6 +19,7 @@ date_default_timezone_set("America/New_York");
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 </head>
 <body>
+
 
         <div class="container">
           <nav class="navbar navbar-expand-lg navbar-light bg-light flex-column">

@@ -1,106 +1,111 @@
 <?php require_once('../../../private/initialize.php');
 session_start();
+$_SESSION['page'] = "check_in";
 if($_SESSION['user'] == NULL){
   header("Location: /en/public");
 }
 ?>
 <?php $page_title = 'Pages'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
-<div class = "container h-100">
-  <div class ="row h-100 justify-content-center">
-    <div class = "col-md-12">
-      <h2 id="heading" class= "text-danger" align= "center" >Check-In Patient</h2>
-      <br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <h2 id="heading" class="text-danger text-center mb-5">Check-In Patient</h2>
+
       <div class="actions">
-        <div class="center-btn" align="center">
-          <a class="action btn btn-danger" href="<?php echo url_for('/staff/pages/new.php'); ?>">Register New Patient</a>
+        <div class="center-btn pb-3 mb-4" align="center">
+          <a class="action btn-lg btn-danger shadow" href="<?php echo url_for('/staff/pages/new.php'); ?>">Register New Patient</a>
         </div>
       </div>
-      <h6 align="center"> Or </h6>
-      <br>
-      <div class="shadow p-3 mb-5 bg-white rounded">
-        <h5> Search Existing Patient </h5>
-        <form method="post">
-          <div class="form-row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="First name" name="fname">
+
+        <h5 align="center" class="checkin pb-3 mb-4">- Or -</h5>
+
+        <div class="search-patient">
+          <form class="mx-2 my-auto d-inline w-100" method="post">
+            <div class="input-group p-2">
+                <input type="text" class="form-control border border-right-0" placeholder="Search Existing Patient" name="search">
+                <span class="input-group-append">
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+              </span>
             </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Last name" name="lname">
-            </div>
-          </div>
-          <br>
-          <fieldset class="form-group">
-            <div class="center-btn" align="center">
-              <i class="fa fa-search"></i> <input class = "action btn btn-danger" type="submit" value="Search" />
-            </div>
-          </fieldset>
-        </form>
-      </div>
-      <div id="alert1" class="alert alert-info" role="alert" style="display: none; margin-top: 5%;">
-        Patient not found
-      </div>
-      <script type="text/javascript">
-      function displayError1(){
-        document.getElementById("alert1").style.display = "block";
-      }
-      </script>
-      <?php
-      if(is_post_request()){
-        if(isset($_POST['ticket'])){
-          $check_in_patient = get_patient_by_uid(get_puid_by_id($_POST['id']));
-          $check_in_patient['ticket'] = $_POST['ticket'];
-          check_in_patient($check_in_patient, get_puid_by_id($_POST['id']));
-          header("Location: /en/public/staff/index.php");
+          </form>
+        </div>
+
+        <div id="alert1" class="alert alert-info" role="alert" style="display: none; margin-top: 5%;">
+          Patient not found
+        </div>
+
+        <script type="text/javascript">
+        function displayError1(){
+          document.getElementById("alert1").style.display = "block";
         }
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $patient_set = filter_patients($fname, $lname);
-        if($patient_set == NULL){
-          echo '<script type="text/javascript"> displayError1(); </script>';
-        }
-      }
-      else{
-        $patient_set = find_all_patients();
-      }
-      ?>
-      <br>
-      <div class="table-responsive">
-        <table class="table">
-          <tr class = "shadow p-1 mb-2 bg-white rounded">
-            <th>No.</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Date of Birth</th>
-            <th>Ticket</th>
-            <th>Check-In</th>
-            <!--  <th>View</th> -->
-            <th>Edit</th>
-            <!--  <th>Delete</th>-->
-          </tr>
-          <?php while($patient = mysqli_fetch_assoc($patient_set)) { ?>
-            <form method="post">
-              <tr>
-                <input type="hidden" name="id" value="<?php echo h($patient['id']); ?>"/>
-                <td><?php echo h($patient['id']); ?></td>
-                <td><?php echo h($patient['fname']); ?></td>
-                <td><?php echo h($patient['gender']); ?></td>
-                <td><?php echo h($patient['dob']); ?></td>
-                <td><input type="text" style="width:40px;" name="ticket" required/></td>
-                <td><input class="action btn btn-danger" type="submit" value="Check-In"/></td>
-                <!-- <td><a class="action" href="<?php echo url_for('/staff/pages/show.php?id=' . h(u($patient['id']))); ?>">View</a></td>-->
-                <td><a class="action" href="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($patient['id']))); ?>"><input type="button" class="action btn btn-primary" value="Edit"/></a></td>
-                <!--  <td><a class="action" href="<?php echo url_for('/staff/pages/delete.php?id=' .h(u($patient['id']))); ?>">Delete</a></td>-->
-              </tr>
-            </form>
-          <?php } ?>
-        </table>
+        </script>
         <?php
-        mysqli_free_result($patient_set);
+        if(is_post_request()){
+          if(isset($_POST['ticket'])){
+            $check_in_patient = get_patient_by_uid(get_puid_by_id($_POST['id']));
+            $check_in_patient['ticket'] = $_POST['ticket'];
+            check_in_patient($check_in_patient, get_puid_by_id($_POST['id']));
+            header("Location: /en/public/staff/index.php");
+          }
+
+          $search = $_POST['search'];
+          $patient_set = filter_patients($search);
+          if($patient_set == NULL){
+            echo '<script type="text/javascript"> displayError1(); </script>';
+          }
+        }
+        else{
+          $patient_set = find_all_patients();
+        }
         ?>
+
+        <div class="table-responsive h-100 justify-content-center align-items-center">
+          <table class="checkin table shadow-sm p-1 mb-2 bg-white rounded">
+            <thead class="checkin">
+              <tr>
+                <th class="p-3 mb-2" scope="col">No.</th>
+                <th class="p-3 mb-2" scope="col">First Name</th>
+                <th class="p-3 mb-2" scope="col">Last Name</th>
+                <th class="p-3 mb-2" scope="col">Date of Birth</th>
+                <th class="p-3 mb-2" scope="col">Ticket</th>
+                <th class="p-3 mb-2" scope="col">Check-In</th>
+                <th class="p-3 mb-2" scope="col">Edit</th>
+              </tr>
+            </thead>
+
+            <?php while($patient = mysqli_fetch_assoc($patient_set)) { ?>
+              <form method="post">
+                <tr>
+                  <input type="hidden" name="id" value="<?php echo h($patient['id']); ?>"/>
+                  <td class="align-middle"><?php echo h($patient['id']); ?></td>
+                  <td class="align-middle"><?php echo h($patient['fname']); ?></td>
+                  <td class="align-middle"><?php echo h($patient['lname']); ?></td>
+                  <td class="align-middle"><?php echo h($patient['dob']); ?></td>
+                  <td class="align-middle"><input type="text" style="width:40px;" name="ticket"/></td>
+                  <td><input class="action btn btn-danger btn-sm" type="submit" value="Check-In"/></td>
+                  <td><a class="action" href="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($patient['id']))); ?>"><i class="fa fa-pencil-square-o fa-2x"></i></a></td>
+                </tr>
+              </form>
+            <?php } ?>
+          </table>
+
+          <?php
+          mysqli_free_result($patient_set);
+          ?>
+
+        </div>
       </div>
-    </div><!--column-->
-  </div><!--row-->
-</div><!--container-->
-</body>
-</html>
+      <!--column-->
+    </div>
+    <!--row-->
+  </div>
+  <!--container-->
+
+  </body>
+
+  </html>

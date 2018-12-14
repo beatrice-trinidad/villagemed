@@ -1,7 +1,8 @@
 <?php
-
 require_once('../../../private/initialize.php');
 session_start();
+$_SESSION['page'] = "edit";
+$_SESSION['id'] = $_GET['id'];
 if($_SESSION['user'] == NULL){
   header("Location: /en/public");
 }

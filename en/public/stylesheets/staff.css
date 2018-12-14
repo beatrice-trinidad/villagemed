@@ -2,7 +2,10 @@ html {
   height: 100%;
   width: 100%;
 }
-
+#test {
+  color: green;
+  background: red;
+}
 body {
   height: 100%;
   width: 100%;
@@ -95,7 +98,6 @@ a.nav-link.back {
 a#navbarDropdown {
   color: #FFAB00 !important;
 }
-
 #content {
   width: 920px;
   min-height: 500px;
