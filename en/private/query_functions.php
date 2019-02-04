@@ -35,7 +35,7 @@ function increment_total_seen(){
   return $result2;
 }
 function find_pvisit_patients(){
-  $sql = "SELECT * FROM pvisit ORDER BY pid ASC";
+  $sql = "SELECT * FROM pvisit ORDER BY ticket ASC";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
@@ -193,22 +193,6 @@ function validate_patient($patient) {
     $errors[$i] = "Guardian's name cannot be blank.";
     $i += 1;
   }
-// position
-// Make sure we are working with an integer
-/*  $postion_int = (int) $patient['position'];
-if($postion_int <= 0) {
-$errors[] = "Position must be greater than zero.";
-}
-if($postion_int > 999) {
-$errors[] = "Position must be less than 999.";
-}*/
-
-// visible
-// Make sure we are working with a string
-/*  $visible_str = (string) $patient['visible'];
-if(!has_inclusion_of($visible_str, ["0","1"])) {
-$errors[] = "Visible must be true or false.";
-}*/
   return $errors;
 }
 
@@ -270,8 +254,15 @@ function insert_patient($patient, $uid, $image_content){
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
+function is_user_checked_in($uid){
+  $sql = "SELECT * FROM pvisit WHERE uid='$uid'";
+  $result = mysqli_query(db_connect(), $sql);
+  $count = mysqli_num_rows($result);
+  return $count;
+}
 function check_in_patient($patient, $uid){
   date_default_timezone_set('Australia/Melbourne');
+  $sql = "";
   $sql = "INSERT INTO pvisit ";
   $sql .= "(uid, fname, age, ticket, checkin, vitals, exam, prescription, dispense) ";
   $sql .= "VALUES (";

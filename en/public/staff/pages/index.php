@@ -39,18 +39,30 @@ if($_SESSION['user'] == NULL){
           Patient not found
         </div>
 
+        <div id="alert2" class="alert alert-danger" role="alert" style="display: none; margin-top: 5%;">
+          Patient already checked in
+        </div>
+
         <script type="text/javascript">
-        function displayError1(){
+        function displayError1() {
           document.getElementById("alert1").style.display = "block";
+        }
+        function displayError2() {
+          document.getElementById("alert2").style.display = "block"
         }
         </script>
         <?php
         if(is_post_request()){
           if(isset($_POST['ticket'])){
-            $check_in_patient = get_patient_by_uid(get_puid_by_id($_POST['id']));
-            $check_in_patient['ticket'] = $_POST['ticket'];
-            check_in_patient($check_in_patient, get_puid_by_id($_POST['id']));
-            header("Location: /en/public/staff/index.php");
+            if(is_user_checked_in(get_puid_by_id($_POST['id'])) > 0){
+              echo '<script type="text/javascript"> displayError2(); </script>';
+            }
+            else{
+              $check_in_patient = get_patient_by_uid(get_puid_by_id($_POST['id']));
+              $check_in_patient['ticket'] = $_POST['ticket'];
+              check_in_patient($check_in_patient, get_puid_by_id($_POST['id']));
+              header("Location: /en/public/staff/index.php");
+            }
           }
 
           $search = $_POST['search'];

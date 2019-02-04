@@ -51,9 +51,8 @@ if($_SESSION['user'] == NULL){
         <table class="table shadow-sm p-1 mb-2 bg-white rounded">
           <thead class="pqueue-head">
             <tr>
-              <th class="p-3 mb-2" scope="col">No.</th>
-              <th class="p-3 mb-2" scope="col">Name</th>
               <th class="p-3 mb-2" scope="col">Ticket</th>
+              <th class="p-3 mb-2" scope="col">Name</th>
               <th class="p-3 mb-2" scope="col">Vitals</th>
               <th class="p-3 mb-2" scope="col">Exam</th>
               <th class="p-3 mb-2" scope="col">Prescription</th>
@@ -64,9 +63,8 @@ if($_SESSION['user'] == NULL){
             <?php while($patient = mysqli_fetch_assoc($patient_set)) {
               if($patient['vitals'] == '0' && $patient['exam'] == '0' && $patient['prescription'] == '0' && $patient['dispense'] == '0'){?>
               <tr>
-                <td class = "align-middle" scope="row"><?php echo h($patient['pid']); ?></td>
-                <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
-                <th class = "align-middle" ><?php echo h($patient['ticket']); ?></th>
+                <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
+                <td class = "align-middle" ><?php echo get_patient_by_uid($patient['pid'])['fname']; ?></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/vitals.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/vital.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/exam.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/exam.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/prescription.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/presc.png" ></td>
@@ -75,9 +73,8 @@ if($_SESSION['user'] == NULL){
             <?php }
             else if($patient['vitals'] == '1' && $patient['exam'] == '0' && $patient['prescription'] == '0' && $patient['dispense'] == '0'){?>
               <tr>
-                <td class = "align-middle" scope="row"><?php echo h($patient['pid']); ?></td>
+                <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
                 <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
-                <th class = "align-middle" ><?php echo h($patient['ticket']); ?></th>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/exam.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/exam.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/prescription.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/presc.png" ></td>
@@ -86,9 +83,8 @@ if($_SESSION['user'] == NULL){
             <?php }
             else if($patient['vitals'] == '1' && $patient['exam'] == '1' && $patient['prescription'] == '0' && $patient['dispense'] == '0'){?>
               <tr>
-                <td class = "align-middle" scope="row"><?php echo h($patient['pid']); ?></td>
+                <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
                 <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
-                <th class = "align-middle" ><?php echo h($patient['ticket']); ?></th>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/prescription.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/presc.png" ></td>
@@ -97,9 +93,8 @@ if($_SESSION['user'] == NULL){
             <?php }
             else if($patient['vitals'] == '1' && $patient['exam'] == '1' && $patient['prescription'] == '1' && $patient['dispense'] == '0'){?>
               <tr>
-                <td class = "align-middle" scope="row"><?php echo h($patient['pid']); ?></td>
+                <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
                 <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
-                <th class = "align-middle" ><?php echo h($patient['ticket']); ?></th>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
@@ -107,9 +102,8 @@ if($_SESSION['user'] == NULL){
               </tr>
             <?php } else if($patient['vitals'] == '1' && $patient['exam'] == '1' && $patient['prescription'] == '1' && $patient['dispense'] == '1'){?>
               <tr>
-                <td class = "align-middle" scope="row"><?php echo h($patient['pid']); ?></td>
+                <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
                 <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
-                <th class = "align-middle" ><?php echo h($patient['ticket']); ?></th>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
