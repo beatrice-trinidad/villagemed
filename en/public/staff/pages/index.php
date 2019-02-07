@@ -1,4 +1,6 @@
 <?php require_once('../../../private/initialize.php');
+header("Cache-Control: no cache");
+session_cache_limiter("private_no_expire");
 session_start();
 $_SESSION['page'] = "check_in";
 if($_SESSION['user'] == NULL){

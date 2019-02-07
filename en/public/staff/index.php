@@ -1,4 +1,6 @@
 <?php require_once('../../private/initialize.php');
+header("Cache-Control: no cache");
+session_cache_limiter("private_no_expire");
 if(date('H') == 0 && date('i') == 0) {
     if(save_pinfo() == 1){
       clear_pinfo();
@@ -16,12 +18,12 @@ if($_SESSION['user'] == NULL){
 <?php $patient_set = find_pvisit_patients(); ?>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
 
       <h2 id="heading" class="text-danger text-center mb-4">Patient Queue</h2>
 
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <div class="card text-center shadow-sm">
             <div class="card-body px-3 py-3">
               <h3 class="card-title text-danger mb-0" id="heading"><?php echo number_of_patients_waiting() ?></h3>
@@ -29,7 +31,7 @@ if($_SESSION['user'] == NULL){
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <div class="card text-center shadow-sm">
             <div class="card-body px-2 py-3">
               <h3 class="card-title text-danger mb-0" id="heading"><?php echo number_of_patients_seen() ?></h3>
@@ -37,7 +39,7 @@ if($_SESSION['user'] == NULL){
             </div>
           </div>
         </div>
-        <div class="col-md-4 my-auto">
+        <div class="col-sm-4 my-auto">
           <div class="btn-toolbar justify-content-center">
             <div class='btn-group shadow'>
               <a href="<?php echo url_for('/staff/pages/index.php'); ?>" class='btn btn-danger'><i class="fa fa-user mr-2"></i> Check-In Patient</a>
@@ -64,7 +66,7 @@ if($_SESSION['user'] == NULL){
               if($patient['vitals'] == '0' && $patient['exam'] == '0' && $patient['prescription'] == '0' && $patient['dispense'] == '0'){?>
               <tr>
                 <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
-                <td class = "align-middle" ><?php echo get_patient_by_uid($patient['pid'])['fname']; ?></td>
+                <td class = "align-middle" ><?php echo h(get_patient_by_uid($patient['uid'])['fname']) ?></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/vitals.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/vital.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/exam.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/exam.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/prescription.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/presc.png" ></td>
@@ -74,7 +76,7 @@ if($_SESSION['user'] == NULL){
             else if($patient['vitals'] == '1' && $patient['exam'] == '0' && $patient['prescription'] == '0' && $patient['dispense'] == '0'){?>
               <tr>
                 <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
-                <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
+                <td class = "align-middle" ><?php echo h(get_patient_by_uid($patient['uid'])['fname']) ?></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/exam.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/exam.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/prescription.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/presc.png" ></td>
@@ -84,7 +86,7 @@ if($_SESSION['user'] == NULL){
             else if($patient['vitals'] == '1' && $patient['exam'] == '1' && $patient['prescription'] == '0' && $patient['dispense'] == '0'){?>
               <tr>
                 <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
-                <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
+                <td class = "align-middle" ><?php echo h(get_patient_by_uid($patient['uid'])['fname']) ?></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><a href="<?php echo url_for('/staff/pages/prescription.php?id=' . h(u($patient['pid'])) .'&ticket=' .h(u($patient['ticket'])));?>"><img src="../images/presc.png" ></td>
@@ -94,7 +96,7 @@ if($_SESSION['user'] == NULL){
             else if($patient['vitals'] == '1' && $patient['exam'] == '1' && $patient['prescription'] == '1' && $patient['dispense'] == '0'){?>
               <tr>
                 <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
-                <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
+                <td class = "align-middle" ><?php echo h(get_patient_by_uid($patient['uid'])['fname']) ?></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
@@ -103,7 +105,7 @@ if($_SESSION['user'] == NULL){
             <?php } else if($patient['vitals'] == '1' && $patient['exam'] == '1' && $patient['prescription'] == '1' && $patient['dispense'] == '1'){?>
               <tr>
                 <td class = "align-middle" ><?php echo h($patient['ticket']); ?></td>
-                <td class = "align-middle" ><?php echo h($patient['fname']); ?></td>
+                <td class = "align-middle" ><?php echo h(get_patient_by_uid($patient['uid'])['fname']) ?></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>
                 <td class = "align-middle" ><img src="../images/done.png" ></td>

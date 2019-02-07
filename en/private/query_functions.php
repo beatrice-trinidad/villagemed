@@ -64,9 +64,18 @@ function insert_prescription($id){
   $uid = get_uid_by_id($id);
   $sql = "UPDATE pinfo SET ";
   $sql .= "treatment_plan = '". $_POST['treatment_plan'] . "',";
-  $sql .= "drug_name = '". $_POST['drug_name']. "',";
-  $sql .= "dosage = '". $_POST['dosage']. "',";
-  $sql .= "quantity = '". $_POST['quantity']. "'";
+  $sql .= "drug1_name = '". $_POST['drug1_name']. "',";
+  $sql .= "drug1_dosage = '". $_POST['drug1_dosage']. "',";
+  $sql .= "drug1_quantity = '". $_POST['drug1_quantity']. "',";
+  $sql .= "drug2_name = '". $_POST['drug2_name']. "',";
+  $sql .= "drug2_dosage = '". $_POST['drug2_dosage']. "',";
+  $sql .= "drug2_quantity = '". $_POST['drug2_quantity']. "',";
+  $sql .= "drug3_name = '". $_POST['drug3_name']. "',";
+  $sql .= "drug3_dosage = '". $_POST['drug3_dosage']. "',";
+  $sql .= "drug3_quantity = '". $_POST['drug3_quantity']. "',";
+  $sql .= "drug4_name = '". $_POST['drug4_name']. "',";
+  $sql .= "drug4_dosage = '". $_POST['drug4_dosage']. "',";
+  $sql .= "drug4_quantity = '". $_POST['drug4_quantity']. "'";
   $sql .= "WHERE uid='" . $uid . "'";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
@@ -104,39 +113,44 @@ function update_history($uid, $immunizations, $allergies, $past_diseases){
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
-function insert_pexam($id, $general_ros_positive, $general_ros_negative, $general_ros_comments, $ophthalmic_ros_positive, $ophthalmic_ros_negative, $ophthalmic_ros_comments, $ent_ros_positive, $ent_ros_negative, $ent_ros_comments, $respiratory_ros_positive, $respiratory_ros_negative, $respiratory_ros_comments, $cardiovascular_ros_positive, $cardiovascular_ros_negative, $cardiovascular_ros_comments, $gastrointestinal_ros_positive, $gastrointestinal_ros_negative, $gastrointestinal_ros_comments, $urinary_ros_positive, $urinary_ros_negative, $urinary_ros_comments, $musculoskeleton_ros_positive, $musculoskeleton_ros_negative, $musculoskeleton_ros_comments, $neurological_ros_positive, $neurological_ros_negative, $neurological_ros_comments, $dermatological_ros_positive, $dermatological_ros_negative, $dermatological_ros_comments) {
+
+function insert_pexam($id, $assessment, $neurology_exam, $musculoskeleton_exam, $skin_exam, $genitourinary_exam, $lymph_exam, $abdomen_exam, $cardiovascular_exam, $respiratory_exam, $eyes_exam, $neck_exam, $ent_exam, $general_exam, $general_ros_positive, $general_ros_comments, $ophthalmic_ros_positive, $ophthalmic_ros_comments, $ent_ros_positive, $ent_ros_comments, $respiratory_ros_positive, $respiratory_ros_comments,
+$cardiovascular_ros_positive, $cardiovascular_ros_comments, $gastrointestinal_ros_positive, $gastrointestinal_ros_comments, $urinary_ros_positive, $urinary_ros_comments, $musculoskeletal_ros_positive, $musculoskeletal_ros_comments, $neurological_ros_positive, $neurological_ros_comments, $dermatological_ros_positive, $dermatological_ros_comments) {
   $uid = get_uid_by_id($id);
   $sql = "UPDATE pinfo SET ";
-  $sql .= "general_ros_positive = '". $general_ros_positive . "',";
-  $sql .= "general_ros_negative = '". $general_ros_negative . "',";
-  $sql .= "general_ros_comments = '". $general_ros_comments . "',";
-  $sql .= "ophthalmic_ros_positive = '". $ophthalmic_ros_positive . "',";
-  $sql .= "ophthalmic_ros_negative = '". $ophthalmic_ros_negative . "',";
-  $sql .= "ophthalmic_ros_comments = '". $ophthalmic_ros_comments . "',";
-  $sql .= "ent_ros_positive = '". $ent_ros_positive . "',";
-  $sql .= "ent_ros_negative = '". $ent_ros_negative . "',";
-  $sql .= "ent_ros_comments = '". $ent_ros_comments . "',";
-  $sql .= "respiratory_ros_positive = '". $respiratory_ros_positive . "',";
-  $sql .= "respiratory_ros_negative = '". $respiratory_ros_negative . "',";
-  $sql .= "respiratory_ros_comments = '". $respiratory_ros_comments . "',";
-  $sql .= "cardiovascular_ros_positive = '". $cardiovascular_ros_positive . "',";
-  $sql .= "cardiovascular_ros_negative = '". $cardiovascular_ros_negative . "',";
-  $sql .= "cardiovascular_ros_comments = '". $cardiovascular_ros_comments . "',";
-  $sql .= "gastrointestinal_ros_positive = '". $gastrointestinal_ros_positive . "',";
-  $sql .= "gastrointestinal_ros_negative = '". $gastrointestinal_ros_negative . "',";
-  $sql .= "gastrointestinal_ros_comments = '". $gastrointestinal_ros_comments . "',";
-  $sql .= "urinary_ros_positive = '". $urinary_ros_positive . "',";
-  $sql .= "urinary_ros_negative = '". $urinary_ros_negative . "',";
-  $sql .= "urinary_ros_comments = '". $urinary_ros_comments . "',";
-  $sql .= "musculoskeleton_ros_positive = '". $musculoskeleton_ros_positive . "',";
-  $sql .= "musculoskeleton_ros_negative = '". $musculoskeleton_ros_negative . "',";
-  $sql .= "musculoskeleton_ros_comments = '". $musculoskeleton_ros_comments . "',";
-  $sql .= "neurological_ros_positive = '". $neurological_ros_positive . "',";
-  $sql .= "neurological_ros_negative = '". $neurological_ros_negative . "',";
-  $sql .= "neurological_ros_comments = '". $neurological_ros_comments . "',";
-  $sql .= "dermatological_ros_positive = '". $dermatological_ros_positive . "',";
-  $sql .= "dermatological_ros_negative = '". $dermatological_ros_negative . "',";
-  $sql .= "dermatological_ros_comments = '". $dermatological_ros_comments . "'";
+  $sql .= "general_ros_positive = '". $general_ros_positive . "', ";
+  $sql .= "general_ros_comments = '". $general_ros_comments . "', ";
+  $sql .= "ophthalmic_ros_positive = '". $ophthalmic_ros_positive . "', ";
+  $sql .= "ophthalmic_ros_comments = '". $ophthalmic_ros_comments . "', ";
+  $sql .= "ent_ros_positive = '". $ent_ros_positive . "', ";
+  $sql .= "ent_ros_comments = '". $ent_ros_comments . "', ";
+  $sql .= "respiratory_ros_positive = '". $respiratory_ros_positive . "', ";
+  $sql .= "respiratory_ros_comments = '". $respiratory_ros_comments . "', ";
+  $sql .= "cardiovascular_ros_positive = '". $cardiovascular_ros_positive . "', ";
+  $sql .= "cardiovascular_ros_comments = '". $cardiovascular_ros_comments . "', ";
+  $sql .= "gastrointestinal_ros_positive = '". $gastrointestinal_ros_positive . "', ";
+  $sql .= "gastrointestinal_ros_comments = '". $gastrointestinal_ros_comments . "', ";
+  $sql .= "urinary_ros_positive = '". $urinary_ros_positive . "', ";
+  $sql .= "urinary_ros_comments = '". $urinary_ros_comments . "', ";
+  $sql .= "musculoskeleton_ros_positive = '". $musculoskeletal_ros_positive . "', ";
+  $sql .= "musculoskeleton_ros_comments = '". $musculoskeletal_ros_comments . "', ";
+  $sql .= "neurological_ros_positive = '". $neurological_ros_positive . "', ";
+  $sql .= "neurological_ros_comments = '". $neurological_ros_comments . "', ";
+  $sql .= "dermatological_ros_positive = '". $dermatological_ros_positive . "', ";
+  $sql .= "dermatological_ros_comments = '". $dermatological_ros_comments . "', ";
+  $sql .= "neurology_exam = '". $neurology_exam . "', ";
+  $sql .= "musculoskeleton_exam = '". $musculoskeleton_exam . "', ";
+  $sql .= "skin_exam = '". $skin_exam. "', ";
+  $sql .= "genitourinary_exam = '". $genitourinary_exam . "', ";
+  $sql .= "lymph_exam = '". $lymph_exam . "', ";
+  $sql .= "abdomen_exam = '". $abdomen_exam . "', ";
+  $sql .= "cardiovascular_exam = '". $cardiovascular_exam . "', ";
+  $sql .= "respiratory_exam = '". $respiratory_exam . "', ";
+  $sql .= "eyes_exam = '". $eyes_exam . "', ";
+  $sql .= "neck_exam = '". $neck_exam . "', ";
+  $sql .= "ent_exam = '". $ent_exam . "', ";
+  $sql .= "general_exam = '". $general_exam . "', ";
+  $sql .= "assessment = '". $assessment . "' ";
   $sql .= "WHERE uid='" . $uid . "'";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
@@ -147,6 +161,21 @@ function login_user(){
   $result = mysqli_query(db_connect(), $sql);
   $count = mysqli_num_rows($result);
   return $count;
+}
+function get_current_uid(){
+  $sql = "SELECT uid FROM staff ";
+  $sql .= "WHERE email = '" .$_POST['email'] ."' and password = '" .$_POST['password'] ."'";
+  $result = mysqli_query(db_connect(), $sql);
+  $row = mysqli_fetch_assoc($result);
+  return $row['uid'];
+}
+function edit_account_settings(){
+  $sql = "UPDATE staff ";
+  $sql .= "SET email = '" .$_POST['_address'] ."', password = '" .$_POST['pswd_'] ."', role = '" .$_POST['role']. "', language = '" .$_POST['language']. "'";
+  $sql .= "WHERE uid = '" .$_SESSION['uid']. "'";
+  $result = mysqli_query(db_connect(), $sql);
+  $row = mysqli_fetch_assoc($result);
+  return $row['uid'];
 }
 function register_new_user(){
   $sql = "INSERT INTO staff ";
@@ -209,6 +238,13 @@ function get_puid_by_id($id){
   $result = mysqli_query(db_connect(), $sql);
   $row = mysqli_fetch_assoc($result);
   return $row['uid'];
+}
+function get_staff_by_uid($uid){
+  $sql = "SELECT * FROM staff ";
+  $sql .= "WHERE uid='" . $uid . "'";
+  $result = mysqli_query(db_connect(), $sql);
+  $patient = mysqli_fetch_assoc($result);
+  return $patient;
 }
 function get_patient_by_uid($uid){
   $sql = "SELECT * FROM patientinfo ";

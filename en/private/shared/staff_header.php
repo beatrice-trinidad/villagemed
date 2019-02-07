@@ -32,8 +32,8 @@
 
       <body>
 
-          <nav class="navbar navbar-expand-md navbar-light bg-white mb-5">
-            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+          <nav class="navbar navbar-expand-sm navbar-light bg-white mb-5 shadow-sm">
+            <div class="navbar-collapse collapse w-100 order-1 order-sm-0 dual-collapse2">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                   <a class="nav-link back" href="javascript:history.back()"><i class="fa fa-chevron-left mr-2" aria-hidden="true"></i>Back</a>
@@ -53,7 +53,7 @@
                     <i class="fa fa-cog mr-2" aria-hidden="true"></i>Settings
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Account Settings</a>
+                    <a class="dropdown-item" href="/en/public/settings.php">Account Settings</a>
                     <a class="dropdown-item" href="/en/public/redirect.php?type=lang"><b><i class="fa fa-commenting-o" aria-hidden="true"></i> Chanje Lang</b></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/en/public/redirect.php?type=logout">Logout</a>
