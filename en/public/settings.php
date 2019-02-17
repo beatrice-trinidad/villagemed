@@ -4,6 +4,7 @@ header("Cache-Control: no cache");
 session_cache_limiter("private_no_expire");
 session_start();
 ?>
+<?php include(SHARED_PATH . '/staff_header.php'); ?>
 
 <html lang="en">
   <head>
@@ -17,7 +18,7 @@ session_start();
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/en/public/stylesheets/staff.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/villagemed/public/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/en/public/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
 
@@ -33,7 +34,7 @@ session_start();
 
   <body>
 
-  <?php include(SHARED_PATH . '/staff_header.php'); ?>
+
 
 
   <div class="container">
@@ -162,7 +163,7 @@ session_start();
             </div>
           </div>
           <div id="alert1" class="alert alert-danger" role="alert" style="display: none; margin-top: 5%;">
-      Passwords do not match
+      Passwords do not match - Try again.
     </div>
     <script type="text/javascript">
     function displayError1(){

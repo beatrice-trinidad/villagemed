@@ -38,21 +38,21 @@ if($_SESSION['user'] == NULL){
             <div class="col-sm-4">
               <h6 class="strong">Body Temperature</h6>
                   <div class="form-group form-inline">
-                    <input type="text" name="body_temp" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['body_temp']?>">
+                    <input type="text" name="body_temp" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="N/A" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['body_temp']?>">
                     <label for="input" class="col-sm-2 col-form-label">°C</label>
                   </div>
               </div>
               <div class="col-sm-4">
                 <h6 class="strong">Weight</h6>
                     <div class="form-group form-inline">
-                      <input type="text" name="weight" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['weight']?>">
+                      <input type="text" name="weight" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="N/A" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['weight']?>">
                       <label for="input" class="col-form-label ml-1">kg</label>
                     </div>
                 </div>
               <div class="col-sm-4">
                 <h6 class="strong">Height</h6>
                     <div class="form-group form-inline">
-                      <input type="text" name="height" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['height']?>">
+                      <input type="text" name="height" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="N/A" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['height']?>">
                       <label for="input" class="col-form-label ml-1">cm</label>
                     </div>
                 </div>
@@ -61,21 +61,21 @@ if($_SESSION['user'] == NULL){
                 <div class="col-sm-4">
                   <h6 class="strong">Respiratory Rate</h6>
                       <div class="form-group form-inline">
-                        <input type="text" name="rr" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['rr']?>">
+                        <input type="text" name="rr" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="N/A" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['rr']?>">
                         <label for="input" class="col-form-label ml-1">breaths</label>
                       </div>
                   </div>
                   <div class="col-sm-4">
                     <h6 class="strong">Blood Pressure</h6>
                         <div class="form-group form-inline">
-                          <input type="text" name="bp" readonly class="form-control plaintext col-sm-6" id="inputPassword" placeholder="___ / __" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['bp']?>">
+                          <input type="text" name="bp" readonly class="form-control plaintext col-sm-6" id="inputPassword" placeholder="N/A" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['bp']?>">
                           <label for="input" class="col-form-label ml-1">mm Hg</label>
                         </div>
                     </div>
                   <div class="col-sm-4">
                     <h6 class="strong">Pulse</h6>
                         <div class="form-group form-inline">
-                          <input type="text" name="pulse" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['pulse']?>">
+                          <input type="text" name="pulse" readonly class="form-control plaintext col-sm-5" id="inputPassword" placeholder="N/A" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['pulse']?>">
                           <label for="input" class=" col-form-label ml-1">bpm</label>
                         </div>
                     </div>
@@ -84,14 +84,14 @@ if($_SESSION['user'] == NULL){
                   <div class="form-group row">
                     <div class="col-sm-12">
                       <h6 class="strong">Any problem(s)?</h6>
-                        <textarea readonly class="form-control plaintext" name="problem" id="exampleFormControlTextarea1" rows="3"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['problem']?></textarea>
+                        <textarea readonly class="form-control plaintext" name="problem" id="exampleFormControlTextarea1" rows="3" placeholder="N/A"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['problem']?></textarea>
                     </div>
                   </div> <!-- end row -->
                   <div class="form-group row mb-5">
                     <div class="col-sm-12">
                       <h6 class="strong mb-0">For how long have the problems been happening? (ex. 3 months)</h6>
                           <small class="text-muted" style="font-size:0.75rem;">For example, "3 months" or "1 year".</small>
-                        <input type="text" name="length_of_problem" readonly class="form-control plaintext" id="inputPassword" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['length_of_problem']?>">
+                        <input type="text" name="length_of_problem" readonly class="form-control plaintext" id="inputPassword" placeholder="N/A" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['length_of_problem']?>">
                     </div>
                   </div> <!-- end row -->
 
@@ -128,7 +128,7 @@ if($_SESSION['user'] == NULL){
                       <h6 class="strong mb-0">If yes, what is the current treatment(s)?</h6>
                       <small class="text-muted" style="font-size:0.75rem;">If none, write "N/A" or "No current treatment".</small>
                       <div class="form-check pl-0">
-                        <textarea readonly class="form-control plaintext" name="current_treatment" class="form-control" id="inputPassword" rows="2"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['current_treatment']?></textarea>
+                        <textarea readonly class="form-control plaintext" name="current_treatment" class="form-control" id="inputPassword" rows="2" placeholder="N/A"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['current_treatment']?></textarea>
                       </div>
                     </div>
                   </div> <!-- end row -->

@@ -2,8 +2,6 @@
   if(!isset($page_title)) { $page_title = 'Staff Area'; }
 ?>
 
-<!doctype html>
-
 <html lang="en">
   <head>
     <!-- Standard Meta -->

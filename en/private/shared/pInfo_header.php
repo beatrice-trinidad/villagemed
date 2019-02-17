@@ -34,7 +34,7 @@
           </div>
           <div class="row mb-1">
             <h6 class="mb-0 font-weight-bold">Age</h6>
-              <input type="text" readonly class="small form-control-plaintext" id="staticAge" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['age'] ?>">
+              <input type="text" readonly class="small form-control-plaintext" id="staticAge" value="<?php echo date_diff(date_create(get_patient_by_uid(get_uid_by_id($_GET['id']))['dob']), date_create('now'))->y ?>">
           </div>
         </div>
         <div class="col-sm-5">

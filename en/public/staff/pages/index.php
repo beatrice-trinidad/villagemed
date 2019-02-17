@@ -1,6 +1,5 @@
 <?php require_once('../../../private/initialize.php');
 header("Cache-Control: no cache");
-session_cache_limiter("private_no_expire");
 session_start();
 $_SESSION['page'] = "check_in";
 if($_SESSION['user'] == NULL){
@@ -100,8 +99,8 @@ if($_SESSION['user'] == NULL){
                   <td class="align-middle"><?php echo h($patient['fname']); ?></td>
                   <td class="align-middle"><?php echo h($patient['lname']); ?></td>
                   <td class="align-middle"><?php echo h($patient['dob']); ?></td>
-                  <td class="align-middle"><input type="text" style="width:40px;" name="ticket"/></td>
-                  <td><input class="action btn btn-danger btn-sm" type="submit" value="Check-In"/></td>
+                  <td class="align-middle"><input type="text" style="width:40px;" name="ticket" required/></td>
+                  <td><button class="action btn btn-danger btn-sm" type="submit">Check-In</button></td>
                   <td><a class="action" href="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($patient['id']))); ?>"><i class="fa fa-pencil-square-o fa-2x"></i></a></td>
                 </tr>
               </form>

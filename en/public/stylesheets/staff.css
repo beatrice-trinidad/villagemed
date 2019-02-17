@@ -15,6 +15,9 @@ body {
   background-color: #F1f0f0!important;
 }
 
+#patient_picture {
+  image-orientation: from-image;
+}
 
 header {
   width: 980px;

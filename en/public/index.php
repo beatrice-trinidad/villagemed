@@ -17,7 +17,7 @@ $_SESSION['page'] = "login";
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/en/public/stylesheets/staff.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/villagemed/public/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/en/public/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
 
@@ -33,11 +33,6 @@ $_SESSION['page'] = "login";
 
     <nav class="navbar navbar-expand-sm navbar-light bg-white mb-5 shadow-sm">
       <div class="navbar-collapse collapse w-100 order-1 order-sm-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link back" href="javascript:history.back()"><i class="fa fa-chevron-left mr-2" aria-hidden="true"></i>Back</a>
-          </li>
-        </ul>
       </div>
       <div class="mx-auto order-0">
         <img class="navbar-brand mx-auto" src="images/vMedLogo.png" alt="logo" />

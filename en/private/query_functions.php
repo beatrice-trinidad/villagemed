@@ -25,7 +25,7 @@ function number_of_patients_seen(){
 }
 function increment_total_seen(){
   $sql = "SELECT total_seen FROM village_med_stats WHERE id = '1'";
-  $result = mysqli_query(dbx_connect(), $sql);
+  $result = mysqli_query(db_connect(), $sql);
   $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
   $current = intval($row['total_seen']);
   $current++;
@@ -177,9 +177,20 @@ function edit_account_settings(){
   $row = mysqli_fetch_assoc($result);
   return $row['uid'];
 }
+function user_exists($email){
+  $sql = "SELECT * FROM staff WHERE email='$email'";
+  $result = mysqli_query(db_connect(), $sql);
+  $count = mysqli_num_rows($result);
+  if($count > 0){
+    return TRUE;
+  }
+  else{
+    return FALSE;
+  }
+}
 function register_new_user(){
   $sql = "INSERT INTO staff ";
-  $sql .= "(uid, fname, lname, email, password, role, nationality)";
+  $sql .= "(uid, fname, lname, email, password, role, language)";
   $sql .= "VALUES(";
   $sql .= "'". uniqid() . "',";
   $sql .= "'". $_POST['fname'] . "',";
@@ -274,14 +285,13 @@ function get_patient_image($uid){
 }
 function insert_patient($patient, $uid, $image_content){
   $sql = "INSERT INTO patientinfo ";
-  $sql .= "(uid, fname, lname, gender, dob, age, GRname, GRemail, GRphone, patient_image_content) ";
+  $sql .= "(uid, fname, lname, gender, dob, GRname, GRemail, GRphone, patient_image_content) ";
   $sql .= "VALUES (";
   $sql .= "'". $uid . "',";
   $sql .= "'". $patient['fname'] . "',";
   $sql .= "'". $patient['lname']. "',";
   $sql .= "'". $patient['gender']. "',";
   $sql .= "'". $patient['dob']. "',";
-  $sql .= "'". $patient['age']. "',";
   $sql .= "'". $patient['GRname']. "',";
   $sql .= "'". $patient['GRemail']. "',";
   $sql .= "'". $patient['GRphone']. "',";
@@ -300,11 +310,9 @@ function check_in_patient($patient, $uid){
   date_default_timezone_set('Australia/Melbourne');
   $sql = "";
   $sql = "INSERT INTO pvisit ";
-  $sql .= "(uid, fname, age, ticket, checkin, vitals, exam, prescription, dispense) ";
+  $sql .= "(uid, ticket, checkin, vitals, exam, prescription, dispense) ";
   $sql .= "VALUES (";
   $sql .= "'". $uid . "',";
-  $sql .= "'". $patient['fname'] . "',";
-  $sql .= "'". $patient['age'] . "',";
   $sql .= "'". $patient['ticket'] . "',";
   $sql .= "'1', '0', '0', '0', '0'";
   $sql .= ")";
@@ -326,7 +334,6 @@ function update_patient($patient){
   $sql .= "lname='" . $patient['lname'] . "', ";
   $sql .= "gender='" . $patient['gender'] . "', ";
   $sql .= "dob='" . $patient['dob'] . "', ";
-  $sql .= "age='" . $patient['age'] . "', ";
   $sql .= "GRname='" . $patient['GRname'] . "', ";
   $sql .= "GRemail='" . $patient['GRemail'] . "', ";
   $sql .= "GRphone='" . $patient['GRphone'] . "' ";
