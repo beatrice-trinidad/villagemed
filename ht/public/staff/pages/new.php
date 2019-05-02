@@ -1,192 +1,209 @@
 <?php
 require_once('../../../private/initialize.php');
+header("Cache-Control: no cache");
 session_start();
+$_SESSION['page'] = "register";
 if($_SESSION['user'] == NULL){
   header("Location: /ht/public");
 }
 ?>
 
-<?php $page_title = 'Register New '; ?>
-<?php include(SHARED_PATH . '/staff_header.php'); ?>
-<html lang="ht">
-<div class="container" id="content">
-  <div class = "row">
-    <div class = "col-md-12">
-      <div class="page new">
-        <h2 id="heading" class= "text-danger">Enskri New Pasyan</h2>
+  <?php $page_title = 'Register New '; ?>
+  <?php include(SHARED_PATH . '/staff_header.php'); ?>
+
+
+  <div class="container">
+
+    <form method="post" enctype="multipart/form-data">
+
+      <div class="col-sm-12">
+        <div class="row">
+          <h2 id="heading" class="text-danger text-center mb-4 w-100">Register New Patient</h2>
+        </div>
+
         <br>
-        <form method="post" enctype="multipart/form-data">
-          <div class= "row">
-            <div class="col-md-7">
-              <div class="form-group">
-                <label for="name">Premye Non:</label>
-                <input type="text" class="form-control" name="fname" id="email" required>
+        <div class="row mb-4">
+          <div class="col">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="name" class="">First Name</label>
+                  <input type="text" class="form-control" name="fname" id="email" required>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="pwd">Siyati:</label>
-                <input type="text" class="form-control" name="lname" id="pwd" required>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="name">Last Name</label>
+                  <input type="text" class="form-control" name="lname" id="pwd" required>
+                </div>
               </div>
-              <div class="form-group">
-                <label class= "col-sm-3" for="pwd">Tikè:</label>
-                <div class="col-sm-5">
+            </div>
+            <div class="row mb-4">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="name" class="">Ticket</label>
                   <input type="text" class="form-control" name="ticket" id="pwd" required>
                 </div>
               </div>
-            </div><!--col1-->
-            <div class =" col-md-4" style = "margin-left: 30px">
-              <div style="height:0px;overflow:hidden">
-                <dd><input type="file" accept="image/*" id="fileInput" name="fileInput" /></dd>
+            </div>
+          </div>
+          <div class="col">
+            <div style="height:0px;overflow:hidden;">
+              <dd><input type="file" accept="image/*" id="fileInput" name="fileInput" /></dd>
+            </div>
+            <div style="height: 275px; width: 154px; float: right; position:relative;" class="bg-white shadow">
+              <img style="display: none; height: 154px; width: 275px; transform-origin: top bottom; position: absolute; object-fit: cover;  overflow: hidden; transform: rotate(90deg) translateX(61px) translateY(61px);" id="patient_picture" /><br />
+              <button id="camera" style="margin-top: 50%;" class="action btn btn-lg btn-success mx-auto d-block" type="button" onclick="chooseFile();"><i class="fa fa-camera"></i></button>
+            </div>
+            <div class="pt-2 text-center" style="height: 50px; width: 154px; float: right; clear: both;">
+              <div class="row text-center" style="clear: both;">
+                <div class="col text-center"><button onclick="chooseFile();" id="retake" style="display:block;">Retake Picture</button></div>
               </div>
-              <div style="height: 275px; width: 200px; box-shadow: 3px 3px 3px 3px #888888;">
-                <img width="200" height="275" style="display: none; object-fit: cover; position: absolute;" id="patient_picture" /><br />
-                <button id="camera" style="margin-top: 30%; position: absolute; left: 50%; -webkit-transform: translateX(-50%); transform: translateX(-50%)"class="action btn" type="button" onclick="chooseFile();"><i class="fa fa-camera"></i></button>
-              </div>
-              <script type="text/javascript">
-                $("#camera").click(function(){
-                  $("#patient_picture").css("display", "block");
-                });
-              </script>
-            </div><!--col2-->
-          </div><!--row-->
-          <br><br>
-          <div class = "row">
-            <legend class="col-form-label col-sm-2 pt-0">Sèks</legend>
-            <div class="col">
-              <input class="form-check-input" type="radio" name="male" id="gridRadios1" onclick="{radio1()}" checked>
-              <label class="form-check-label" for="gridRadios1">
-                Gason
-              </label>
+              <div class="col"></div>
             </div>
-            <div class="col">
-              <input class="form-check-input" type="radio" name="female" id="gridRadios2" onclick="{radio2()}">
-              <label class="form-check-label" for="gridRadios2">
-                Fi
-              </label>
+            <script type="text/javascript">
+              $("#camera").click(function() {
+                $("#patient_picture").css("display", "block");
+              });
+            </script>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-sm-7">
+            <label for="pwd">Gender</label>
+            <div class="form-check form-check-inline">
+              <label class="btn btn-light d-flex justify-content-start px-2 mr-3 w-100">
+                  <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male" checked>
+                    Male
+        </label>
+              <label class="btn btn-light d-flex justify-content-start px-2 mr-3 w-100">
+          <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="Female">
+                    Female
+                  </label>
+              <label class="btn btn-light d-flex justify-content-start px-2 mr-1 w-100">
+              <input class="form-check-input" type="radio" name="gender" id="gridRadios3" value="Other">
+                    Other
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+              <input id="bday" type="date" class="form-control" name="dob" onchange="submitBday()" required/>
             </div>
-            <div class="col">
-              <input class="form-check-input" type="radio" name="other" id="gridRadios3" onclick="{radio3()}">
-              <label class="form-check-label" for="gridRadios3">
-                Lòt
-              </label>
-            </div>
-          </div><!--row-->
-          <br>
-          <div class = "row">
-            <div class = "col-sm-6">
-              <div class = "form-group row">
-                <label for="input" class="col-sm-4 col-form-label">Dat Nesans</label>
-                <div class="col-sm-8">
-                  <input id="bday" type="date" class="form-control" name="dob" onchange="submitBday()" required/>
-                </div>
-              </div>
-            </div>
-            <div class = "col-sm-6">
-              <div class = "form-group row">
-                <label for="input" class="col-sm-2 col-form-label">Laj</label>
-                <div class="col-sm-8">
-                  <input id="resultBday" type="integer" class="form-control" name="age" required/>
-                </div>
-              </div>
-            </div>
-          </div><!--row-->
-          <br>
-          <div class="form-group row">
-            <label for="input" class="col-sm-3 col-form-label">Non Gadyen An</label>
-            <div class="col-sm-8">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label for="pwd">Guardian's Name</label>
               <input type="text" class="form-control" name="GRname" id="inputPassword" placeholder="Full name" required>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="input" class="col-sm-3 col-form-label">Imèl Gadyen An</label>
-            <div class="col-sm-8">
+        </div>
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="form-group">
+              <label for="pwd">Guardian's Email Address</label>
               <input type="Email" class="form-control" name="GRemail" id="inputPassword" placeholder="me@example.com">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="input" class="col-sm-3 col-form-label">Nimewo Telefòn Gadyen Legal La</label>
-            <div class="col-sm-8">
+        </div>
+        <div class="row mb-4">
+          <div class="col-sm-10">
+            <div class="form-group">
+              <label for="pwd">Guardian's Phone Number</label>
               <input type="tel" class="form-control" name="GRphone" id="inputPassword" placeholder="123-456-7890">
             </div>
           </div>
-          <div align="center" id="operations">
-            <input class = "action btn btn-danger" type="submit" value="Enskri ak Tcheke" />
-          </div>
-          <div id="alert">
-            <div id="alert1" class="alert alert-danger alert-dismissible fade show" role="alert">
-              Yon bagay ale mal! Pasyan an pa anrejistre. Eseye ankò pita.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div id="alert2" class="alert alert-danger alert-dismissible fade show" role="alert">
-              Yon bagay ale mal! Pasyan an pa tcheke pous Eseye ankò pita.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div id="alert3" class="alert alert-success alert-dismissible fade show" role="alert">
-              Pasyan anrejistre!
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        </div>
+
+        <div class="form-group">
+          <div class="actions">
+            <div class="center-btn py-3 my-4" align="center">
+              <input class="action btn  btn-danger shadow" type="submit" value="Register and Check-In Patient" />
             </div>
           </div>
-        </div><!--row-->
-      </form>
-    </div><!--page-new-->
-  </div><!--col-->
-</div><!--row-->
-</div><!--container-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript">
-document.getElementById("alert1").style.display = "none";
-document.getElementById("alert2").style.display = "none";
-document.getElementById("alert3").style.display = "none";
-function readURL(input){
-  if(input.files && input.files[0]){
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $('#patient_picture').attr('src', e.target.result);
+        </div>
+
+
+        <div id="alert">
+          <div id="alert1" class="alert alert-danger alert-dismissible fade show" role="alert">
+            Something went wrong! Patient not registered. Try again later.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div id="alert2" class="alert alert-danger alert-dismissible fade show" role="alert">
+            Something went wrong! Patient not checked in. Try again later.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div id="alert3" class="alert alert-success alert-dismissible fade show" role="alert">
+            Patient Registered!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        </div>
+
+
+      </div>
+    </form>
+
+  </div>
+  </body>
+
+  </html>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    document.getElementById("alert1").style.display = "none";
+    document.getElementById("alert2").style.display = "none";
+    document.getElementById("alert3").style.display = "none";
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $('#patient_picture').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
     }
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-$("#fileInput").change(function() {
-  readURL(this);
-});
-function radio1(){
-  document.getElementById('gridRadios2').checked = false;
-  document.getElementById('gridRadios3').checked = false;
-}
-function radio2(){
-  document.getElementById('gridRadios1').checked = false;
-  document.getElementById('gridRadios3').checked = false;
-}
-function radio3(){
-  document.getElementById('gridRadios1').checked = false;
-  document.getElementById('gridRadios2').checked = false;
-}
-function submitBday() {
-  var Bdate = document.getElementById('bday').value;
-  var Bday = +new Date(Bdate);
-  var Q4A =  ~~ ((Date.now() - Bday) / (31557600000));
-  var theBday = document.getElementById('resultBday');
-  theBday.value = Q4A;
-}
-function chooseFile() {
-  document.getElementById("fileInput").click();
-}
-function displayError1() {
-  document.getElementById("alert1").style.display = "block";
-}
-function displayError2() {
-  document.getElementById("alert2").style.display = "block";
-}
-function displayError3() {
-  document.getElementById("alert3").style.display = "block";
-}
-</script>
-<?php
+    $("#fileInput").change(function() {
+      readURL(this);
+    });
+
+    function submitBday() {
+      var Bdate = document.getElementById('bday').value;
+      var Bday = +new Date(Bdate);
+      var Q4A = ~~((Date.now() - Bday) / (31557600000));
+      var theBday = document.getElementById('resultBday');
+      theBday.value = Q4A;
+    }
+
+    function chooseFile() {
+      document.getElementById("fileInput").click();
+    }
+
+    function displayError1() {
+      document.getElementById("alert1").style.display = "block";
+    }
+
+    function displayError2() {
+      document.getElementById("alert2").style.display = "block";
+    }
+
+    function displayError3() {
+      document.getElementById("alert3").style.display = "block";
+    }
+  </script>
+  <?php
 if(is_post_request()) {
   $imagetmp = addslashes(file_get_contents($_FILES["fileInput"]["tmp_name"]));
   $patient = [];
@@ -194,19 +211,10 @@ if(is_post_request()) {
   $patient['fname'] = $_POST['fname'] ?? '';
   $patient['lname'] = $_POST['lname'] ?? '';
   $patient['dob'] = $_POST['dob'] ?? '';
-  $patient['age'] = $_POST['age'] ?? '';
   $patient['GRname'] = $_POST['GRname'] ?? '';
   $patient['GRemail'] = $_POST['GRemail'] ?? '';
   $patient['GRphone'] = $_POST['GRphone'] ?? '';
-  if($_POST['male'] == "on"){
-    $patient['gender'] = "Male";
-  }
-  else if($_POST['female'] == "on"){
-    $patient['gender'] = "Female";
-  }
-  else{
-    $patient['gender'] = "Other";
-  }
+  $patient['gender'] = $_POST['gender'] ?? '';
   $uid = uniqid();
   $insert_result = insert_patient($patient, $uid, $imagetmp);
   $check_in_result = check_in_patient($patient, $uid);
@@ -224,5 +232,6 @@ if(is_post_request()) {
   }
 }
 ?>
-</body>
-</html>
+    </body>
+
+    </html>

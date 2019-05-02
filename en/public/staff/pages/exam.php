@@ -150,7 +150,7 @@ if($_SESSION['user'] == NULL){
 
     $assessment = $_POST['assessment'];
 
-    insert_pexam($_GET['id'], $assessment, $neurology_exam, $musculoskeleton_exam, $skin_exam, $genitourinary_exam, $lymph_exam, $abdomen_exam, $cardiovascular_exam, $respiratory_exam, $eyes_exam, $neck_exam, $ent_exam, $general_exam, $general_ros_positive, $general_ros_comments, $ophthalmic_ros_positive, $ophthalmic_ros_comments, $ent_ros_positive, $ent_ros_comments, $respiratory_ros_positive, $respiratory_ros_comments,
+    insert_pexam($_GET['id'], $_POST['doctorsignature'], $assessment, $neurology_exam, $musculoskeleton_exam, $skin_exam, $genitourinary_exam, $lymph_exam, $abdomen_exam, $cardiovascular_exam, $respiratory_exam, $eyes_exam, $neck_exam, $ent_exam, $general_exam, $general_ros_positive, $general_ros_comments, $ophthalmic_ros_positive, $ophthalmic_ros_comments, $ent_ros_positive, $ent_ros_comments, $respiratory_ros_positive, $respiratory_ros_comments,
     $cardiovascular_ros_positive, $cardiovascular_ros_comments, $gastrointestinal_ros_positive, $gastrointestinal_ros_comments, $urinary_ros_positive, $urinary_ros_comments, $musculoskeletal_ros_positive, $musculoskeletal_ros_comments, $neurological_ros_positive, $neurological_ros_comments, $dermatological_ros_positive, $dermatological_ros_comments);
     update_patient_status("exam", $_GET['id']);
     header("Location: /en/public/staff/index.php");
@@ -1402,6 +1402,12 @@ if($_SESSION['user'] == NULL){
               <div class="form-check pl-0">
                 <textarea class="form-control" name="assessment" class="form-control" id="assessment" rows="3"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['assessment'] ?></textarea>
               </div>
+            </div>
+          </div>
+          <div class="form-group row mb-5">
+            <div class="col-sm-6">
+              <h6 class="strong mb-0">Doctor's Signature</h6>
+                <input type="text" name="doctorsignature" class="form-control plaintext" id="signature" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['doc_sig'] ?>" required>
             </div>
           </div>
           <!-- end row -->

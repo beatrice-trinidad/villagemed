@@ -31,7 +31,7 @@
         </ul>
       </div>
       <div class="mx-auto order-0">
-        <img class="navbar-brand mx-auto" src="<?php echo url_for('/images/vMedLogo.png'); ?>" alt="logo" />
+        <a href="/en/public/staff/index.php"><img class="navbar-brand mx-auto" src="<?php echo url_for('/images/vMedLogo.png'); ?>" alt="logo" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -44,6 +44,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/en/public/settings.php">Account Settings</a>
+              <a class="dropdown-item" href="/en/public/staff/pages/statistics.php">Statistics</a>
               <a class="dropdown-item" href="/en/public/redirect.php?type=lang"><b><i class="fa fa-commenting-o" aria-hidden="true"></i> Chanje Lang</b></a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/en/public/redirect.php?type=logout">Logout</a>

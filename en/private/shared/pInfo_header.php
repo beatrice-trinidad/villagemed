@@ -2,7 +2,14 @@
   if(!isset($page_title)) { $page_title = 'Staff Area'; }
 ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
-
+<?php
+if(is_post_request()){
+  if(isset($_POST["confirm"])){
+    header("Location: /en/public/staff/index.php");
+    delete_patient(get_uid_by_id($_GET['id']));
+  }
+}
+?>
 <div class = "container-fluid">
 
   <div class="bg-white p-3 mb-4 w-100 shadow-sm">
@@ -20,8 +27,30 @@
     <div class="row">
         <div class="col-sm-4">
           <?php
-            echo '<img class="img-fluid" src="data:image/png;base64,'.base64_encode(get_patient_image(get_uid_by_id($_GET['id']))).'"/>';
+            echo '<img class="img-fluid" style="transform: rotate(90deg); transform-origin: 31% 50%;" src="data:image/png;base64,'.base64_encode(get_patient_image(get_uid_by_id($_GET['id']))).'"/>';
           ?>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete this patient?
+              </div>
+              <div class="modal-footer">
+                <form method="post">
+                  <input type="hidden" name="confirm" />
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <input type="submit" value="Confirm" class="btn btn-primary" />
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-sm-3">
           <div class="row mb-1">
@@ -34,7 +63,7 @@
           </div>
           <div class="row mb-1">
             <h6 class="mb-0 font-weight-bold">Age</h6>
-              <input type="text" readonly class="small form-control-plaintext" id="staticAge" value="<?php echo date_diff(date_create(get_patient_by_uid(get_uid_by_id($_GET['id']))['dob']), date_create('now'))->y ?>">
+              <input type="text" readonly class="small form-control-plaintext" id="staticAge" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['age'] ?>">
           </div>
         </div>
         <div class="col-sm-5">
@@ -49,6 +78,11 @@
           <div class="row mb-1">
             <h6 class="mb-0 font-weight-bold">Guardian's Phone Number</h6>
               <input type="text" readonly class="small form-control-plaintext" id="staticEmail" value="<?php echo get_patient_by_uid(get_uid_by_id($_GET['id']))['GRphone'] ?>">
+          </div>
+          <div class="row mb-1">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+              Delete Patient
+            </button>
           </div>
         </div>
       </div><!-- end row-->

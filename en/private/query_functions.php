@@ -2,18 +2,26 @@
 require_once('database.php');
 require_once('validation_functions.php');
 
-function find_all_patients(){
-  $sql = "SELECT * FROM patientinfo ORDER BY id ASC";
+
+function find_all_patients($start){
+  $sql = "SELECT * FROM patientinfo ORDER BY id ASC LIMIT $start, 15";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
+
+function get_total_patients(){
+  $sql = "SELECT * FROM patientinfo";
+  $result = mysqli_query(db_connect(), $sql);
+  return mysqli_num_rows($result);
+}
+
 function update_patient_status($status, $pid){
   $sql = "UPDATE pvisit SET " .$status ."='1' WHERE pid = " .$pid;
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
 function number_of_patients_seen(){
-  $sql = "SELECT vitals, prescription, exam, dispense FROM pvisit";
+  $sql = "SELECT vitals, prescription, exam, dispense FROM pvisit WHERE DATE(vdate) = CURDATE()";
   $result = mysqli_query(db_connect(), $sql);
   $count = 0;
   while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -34,8 +42,13 @@ function increment_total_seen(){
   $result2 = mysqli_query(db_connect(), $sql);
   return $result2;
 }
+function get_stats(){
+  $sql = "SELECT * FROM statistics";
+  $result = mysqli_query(db_connect(), $sql);
+  return $result;
+}
 function find_pvisit_patients(){
-  $sql = "SELECT * FROM pvisit ORDER BY ticket ASC";
+  $sql = "SELECT * FROM pvisit WHERE DATE(vdate) = CURDATE() ORDER BY ticket ASC";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
@@ -75,16 +88,16 @@ function insert_prescription($id){
   $sql .= "drug3_quantity = '". $_POST['drug3_quantity']. "',";
   $sql .= "drug4_name = '". $_POST['drug4_name']. "',";
   $sql .= "drug4_dosage = '". $_POST['drug4_dosage']. "',";
-  $sql .= "drug4_quantity = '". $_POST['drug4_quantity']. "'";
+  $sql .= "drug4_quantity = '". $_POST['drug4_quantity']. "',";
+  $sql .= "doc_sig_2 = '". $_POST['doctorsignature2']. "'";
   $sql .= "WHERE uid='" . $uid . "'";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
 function insert_pvitals($id, $any_treatment, $treatment_helpful){
   $uid = get_uid_by_id($id);
-  $vdate = date('m/d/Y h:i:s a', time());
   $sql = "INSERT INTO pinfo ";
-  $sql .= "(uid, body_temp, weight, height, rr, bp, pulse, problem, length_of_problem, any_treatment, current_treatment, treatment_helpful, vdate) ";
+  $sql .= "(uid, body_temp, weight, height, rr, bp, pulse, problem, length_of_problem, any_treatment, current_treatment, treatment_helpful) ";
   $sql .= "VALUES (";
   $sql .= "'". $uid . "',";
   $sql .= "'". $_POST['body_temp'] . "',";
@@ -97,8 +110,7 @@ function insert_pvitals($id, $any_treatment, $treatment_helpful){
   $sql .= "'". $_POST['length_of_problem']. "',";
   $sql .= "'". $any_treatment. "',";
   $sql .= "'". $_POST['current_treatment']. "',";
-  $sql .= "'". $treatment_helpful. "',";
-  $sql .= "'". $vdate. "'";
+  $sql .= "'". $treatment_helpful. "'";
   $sql .= ")";
   $result = mysqli_query(db_connect(), $sql);
   update_history($uid, $_POST['immunization_history'], $_POST['allergy_history'], $_POST['past_diseases']);
@@ -114,7 +126,7 @@ function update_history($uid, $immunizations, $allergies, $past_diseases){
   return $result;
 }
 
-function insert_pexam($id, $assessment, $neurology_exam, $musculoskeleton_exam, $skin_exam, $genitourinary_exam, $lymph_exam, $abdomen_exam, $cardiovascular_exam, $respiratory_exam, $eyes_exam, $neck_exam, $ent_exam, $general_exam, $general_ros_positive, $general_ros_comments, $ophthalmic_ros_positive, $ophthalmic_ros_comments, $ent_ros_positive, $ent_ros_comments, $respiratory_ros_positive, $respiratory_ros_comments,
+function insert_pexam($id, $docsig, $assessment, $neurology_exam, $musculoskeleton_exam, $skin_exam, $genitourinary_exam, $lymph_exam, $abdomen_exam, $cardiovascular_exam, $respiratory_exam, $eyes_exam, $neck_exam, $ent_exam, $general_exam, $general_ros_positive, $general_ros_comments, $ophthalmic_ros_positive, $ophthalmic_ros_comments, $ent_ros_positive, $ent_ros_comments, $respiratory_ros_positive, $respiratory_ros_comments,
 $cardiovascular_ros_positive, $cardiovascular_ros_comments, $gastrointestinal_ros_positive, $gastrointestinal_ros_comments, $urinary_ros_positive, $urinary_ros_comments, $musculoskeletal_ros_positive, $musculoskeletal_ros_comments, $neurological_ros_positive, $neurological_ros_comments, $dermatological_ros_positive, $dermatological_ros_comments) {
   $uid = get_uid_by_id($id);
   $sql = "UPDATE pinfo SET ";
@@ -150,7 +162,8 @@ $cardiovascular_ros_positive, $cardiovascular_ros_comments, $gastrointestinal_ro
   $sql .= "neck_exam = '". $neck_exam . "', ";
   $sql .= "ent_exam = '". $ent_exam . "', ";
   $sql .= "general_exam = '". $general_exam . "', ";
-  $sql .= "assessment = '". $assessment . "' ";
+  $sql .= "assessment = '". $assessment . "', ";
+  $sql .= "doc_sig = '". $docsig . "' ";
   $sql .= "WHERE uid='" . $uid . "'";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
@@ -190,7 +203,7 @@ function user_exists($email){
 }
 function register_new_user(){
   $sql = "INSERT INTO staff ";
-  $sql .= "(uid, fname, lname, email, password, role, language)";
+  $sql .= "(uid, fname, lname, email, password, role, language, master_password)";
   $sql .= "VALUES(";
   $sql .= "'". uniqid() . "',";
   $sql .= "'". $_POST['fname'] . "',";
@@ -198,7 +211,8 @@ function register_new_user(){
   $sql .= "'". $_POST['email_address']  . "',";
   $sql .= "'". $_POST['password_']  . "',";
   $sql .= "'". $_POST['role']  . "',";
-  $sql .= "'". $_POST['language']  . "'";
+  $sql .= "'". $_POST['language']  . "',";
+  $sql .= "'". $_POST['master_password']  . "'";
   $sql .= ")";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
@@ -301,26 +315,26 @@ function insert_patient($patient, $uid, $image_content){
   return $result;
 }
 function is_user_checked_in($uid){
-  $sql = "SELECT * FROM pvisit WHERE uid='$uid'";
+  $sql = "SELECT * FROM pvisit WHERE uid='$uid' AND WHERE DATE(vdate) = CURDATE()";
   $result = mysqli_query(db_connect(), $sql);
   $count = mysqli_num_rows($result);
   return $count;
 }
 function check_in_patient($patient, $uid){
-  date_default_timezone_set('Australia/Melbourne');
+  $vdate = date('y-m-d', time());
   $sql = "";
   $sql = "INSERT INTO pvisit ";
-  $sql .= "(uid, ticket, checkin, vitals, exam, prescription, dispense) ";
+  $sql .= "(uid, ticket, checkin, vitals, exam, prescription, dispense, vdate) ";
   $sql .= "VALUES (";
   $sql .= "'". $uid . "',";
   $sql .= "'". $patient['ticket'] . "',";
-  $sql .= "'1', '0', '0', '0', '0'";
+  $sql .= "'1', '0', '0', '0', '0', '".$vdate."'";
   $sql .= ")";
   $result = mysqli_query(db_connect(), $sql);
   return $result;
 }
 function number_of_patients_waiting(){
-  $sql = "SELECT COUNT(*) FROM pvisit";
+  $sql = "SELECT COUNT(*) FROM pvisit WHERE DATE(vdate) = CURDATE()";
   $result = mysqli_query(db_connect(), $sql);
   return mysqli_fetch_assoc($result)['COUNT(*)'];
 }
@@ -343,24 +357,15 @@ function update_patient($patient){
   return $result;
 }
 
-function delete_patient($id){
-  global $db;
-  $sql = "DELETE FROM patientinfo ";
-  $sql .= "WHERE id='" . $id ."' ";
-  $sql .= "LIMIT 1";
+function delete_patient($uid){
+  $sql = "DELETE FROM pinfo ";
+  $sql .= "WHERE uid='" . $uid . "'";
+  $result = mysqli_query(db_connect(), $sql);
 
-  $result = mysqli_query($db, $sql);
+  $sql = "DELETE FROM pvisit ";
+  $sql .= "WHERE uid='" . $uid . "'";
+  $result = mysqli_query(db_connect(), $sql);
 
-  if($result){
-    return true;
-
-  }
-  else{
-    //delete failed
-    echo mysqli_error($db);
-    db_disconnect($db);
-    exit;
-
-  }
+  return $result;
 }
 ?>

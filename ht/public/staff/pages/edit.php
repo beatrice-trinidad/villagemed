@@ -1,7 +1,8 @@
 <?php
-
 require_once('../../../private/initialize.php');
 session_start();
+$_SESSION['page'] = "edit";
+$_SESSION['id'] = $_GET['id'];
 if($_SESSION['user'] == NULL){
   header("Location: /ht/public");
 }
@@ -35,74 +36,117 @@ else{
 
 <?php $page_title = 'Edit Page'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
-<html lang="ht">
-<div id="content">
 
 
+  <div class="container">
 
-  <div class="page edit">
-    <h1>Modifye Paj</h1>
-    <?php echo display_errors($errors); ?>
+    <div class="col-sm-12">
+      <div class="row">
+        <h2 id="heading" class="text-danger text-center mb-4 w-100">Edit Patient</h2>
+      </div>
 
-    <form action="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($id))); ?>" method="post">
-      <!--  <dl>
-      <dt>Ticket Number</dt>
-      <dd><input type="text" name="menu_name" value="<?php echo h($visit['ticket']); ?>" /></dd>
-    </dl>-->
-    <dl>
-      <dt>Premye Non</dt>
-      <dd><input type="text" name="fname" value="<?php echo h($patient['fname']); ?>" /></dd>
-      <!--  <select name="position">
-      <option value="1"<?php if($position == "1") { echo " selected"; } ?>>1</option>
-    </select>-->
-  </dd>
-</dl>
-<dl>
-  <dt>Siyati</dt>
-  <dd><input type="text" name="lname" value="<?php echo h($patient['lname']); ?>" />
-    <!--  <input type="hidden" name="visible" value="0" />
-    <input type="checkbox" name="visible" value="1"<?php if($visible == "1") { echo " checked"; } ?> />-->
-  </dd>
-</dl>
-<dl>
-  <dt>Sèks</dt>
-  <dd><input type="text" name="gender" value="<?php echo h($patient['gender']); ?>" />
-  </dd>
-</dl>
-<dl>
-  <dt>Dat Nesans</dt>
-  <dd><input type="text" name="dob" value="<?php echo h($patient['dob']); ?>" />
-  </dd>
-</dl>
+      <br>
+      <?php echo display_errors($errors); ?>
 
-<dl>
-  <dt>Laj</dt>
-  <dd><input type="text" name="age" value="<?php echo h($patient['age']); ?>" />
-  </dd>
-</dl>
+      <form action="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($id))); ?>" method="post">
 
-<dl>
-  <dt>Non Gadyen An</dt>
-  <dd><input type="text" name="GRname" value="<?php echo h($patient['GRname']); ?>" />
-  </dd>
-</dl>
-<dl>
-  <dt>Imèl Gadyen An</dt>
-  <dd><input type="text" name="GRemail" value="<?php echo h($patient['GRemail']); ?>" />
-  </dd>
-</dl>
-<dl>
-  <dt>Telefòn Gadyen Legal La</dt>
-  <dd><input type="text" name="GRphone" value="<?php echo h($patient['GRphone']); ?>" />
-  </dd>
-</dl>
-<div id="operations">
-  <input class="action btn btn-danger" type="submit" value="Mete Ajou" />
-</div>
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="form-group">
+            <label for="name" class="">First Name</label>
+            <input type="text" class="form-control" name="fname" value="<?php echo h($patient['fname']); ?>" />
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="form-group">
+            <label for="name">Last Name</label>
+            <input type="text" class="form-control" name="lname" value="<?php echo h($patient['lname']); ?>" />
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-sm-8">
+          <label for="pwd">Gender</label>
+          <div class="row">
+            <div class="col">
+          <div class="form-check form-check-inline">
+            <label class="btn btn-light d-flex justify-content-start px-3 mr-3 w-100">
+                        <input class="form-check-input" type="radio" name="role" id="jevattend_id" value="Male"
+                        <?php
+                          if($patient['gender'] == "Male"){
+                            echo "checked";
+                          }
+                        ?>
+                        >
+                        Male
+            </label>
+              <label class="btn btn-light d-flex justify-content-start px-3 mr-3 w-100">
+                        <input class="form-check-input" type="radio" name="role" id="jevattend_id" value="Female"
+                        <?php
+                          if($patient['gender'] == "Female"){
+                            echo "checked";
+                          }
+                        ?>
+                        >
+                        Female
+                      </label>
+              <label class="btn btn-light d-flex justify-content-start px-3 mr-1 w-100">
+                        <input class="form-check-input" type="radio" name="role" id="jevattend_id" value="Other"
+                        <?php
+                          if($patient['gender'] == "Other"){
+                            echo "checked";
+                          }
+                        ?>
+                        >
+                        Other
+          </div>
+        </div>
+        </div>
+      </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="text" class="form-control" name="dob" value="<?php echo h($patient['dob']); ?>" />
+          </div>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-sm-10">
+          <div class="form-group">
+            <label for="pwd">Guardian's Name</label>
+            <input type="text" class="form-control" name="GRname" value="<?php echo h($patient['GRname']); ?>" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-10">
+          <div class="form-group">
+            <label for="pwd">Guardian's Email Address</label>
+              <input type="text" class="form-control" name="GRemail" value="<?php echo h($patient['GRemail']); ?>" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-10">
+          <div class="form-group">
+            <label for="pwd">Guardian's Phone Number</label>
+              <input type="text" class="form-control" name="GRphone" value="<?php echo h($patient['GRphone']); ?>" />
+          </div>
+        </div>
+      </div>
+
+        <div class="form-group">
+          <div class="actions">
+            <div class="center-btn py-3 my-4" align="center">
+              <input class="action btn  btn-danger shadow" type="submit" value="Update Patient Info" />
+            </div>
+          </div>
+        </div>
+
+  </div>
 </form>
 
 </div>
+</body>
 
-</div>
-
-<?php include(SHARED_PATH . '/staff_footer.php'); ?>
+</html>

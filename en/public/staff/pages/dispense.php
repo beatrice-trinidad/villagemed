@@ -370,6 +370,12 @@ if($_SESSION['user'] == NULL){
               <textarea type="text" name="length_of_problem" readonly class="form-control plaintext" rows="3" placeholder="N/A"><?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['assessment']?></textarea>
             </div>
           </div>
+          <div class="form-group row mb-5">
+            <div class="col-sm-6">
+              <h6 class="strong mb-0">Doctor's Signature</h6>
+                <input type="text" name="doctorsignature" readonly class="form-control plaintext" placeholder="N/A" id="signature" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['doc_sig']?>">
+            </div>
+          </div>
         </div>
         <!-- end of ROS/Exam tab -->
 
@@ -422,6 +428,12 @@ if($_SESSION['user'] == NULL){
               <input type="text" name="drug4_quantity" readonly class="form-control plaintext mb-1" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['drug4_quantity']?>">
             </div>
           </div><!-- end row -->
+          <div class="form-group row mb-5">
+            <div class="col-sm-6">
+              <h6 class="strong mb-0">Doctor's Signature</h6>
+                <input type="text" readonly name="doctorsignature" class="form-control plaintext" id="signature" value="<?php echo get_pinfo_by_uid(get_uid_by_id($_GET['id']))['doc_sig_2']?>">
+            </div>
+          </div>
 
   <div class="center-btn py-3 my-4" align="center">
     <button class="action btn btn-danger shadow" type="submit">Medicine Dispensed<i class="fa fa-check ml-1" aria-hidden="true"></i></button>

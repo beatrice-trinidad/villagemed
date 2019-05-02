@@ -27,7 +27,7 @@ if($_SESSION['user'] == NULL){
           <div class="card text-center shadow-sm">
             <div class="card-body px-2 py-3">
               <h3 class="card-title text-danger mb-0" id="heading"><?php echo number_of_patients_seen() ?></h3>
-              <small><p class="card-title text-danger mb-0 pb-0">Patients Currently Waiting</p></small>
+              <small><p class="card-title text-danger mb-0 pb-0">Total Patients Seen Today</p></small>
             </div>
           </div>
         </div>

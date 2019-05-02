@@ -91,29 +91,13 @@ $_SESSION['page'] = "login";
         </div>
         <div class="row">
           <div class="col"></div>
-          <div class="col-sm-8" style="padding-top: .35rem">
-            <div class="form-check mb-2 mr-sm-2 mb-sm-0">
-              <label class="form-check-label">
-                      <input class="form-check-input" name="remember"type="checkbox" >
-                            <span style="padding-bottom: .15rem">Remember me</span>
-                        </label>
-            </div>
+          <div class="col">
+            <a class="btn btn-link text-warning" href="./newuser.php">Register New User</a>
           </div>
           <div class="col"></div>
         </div>
         <div class="center-btn py-3" align="center">
           <button type="submit" class="action btn btn-danger shadow">Login<i class="fa fa-sign-in ml-1"></i></a>
-        </div>
-
-        <div class="row">
-          <div class="col"></div>
-          <div class="col-sm-5">
-            <a class="btn btn-link text-warning" href="./newuser.php">Register New User</a>
-          </div>
-          <div class="col-sm-5">
-            <a class="btn btn-link text-warning" href="#">Forgot Your Password?</a>
-          </div>
-          <div class="col"></div>
         </div>
 
         </div>

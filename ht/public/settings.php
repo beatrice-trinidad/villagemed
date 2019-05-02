@@ -15,7 +15,7 @@ session_start();
     <!-- Site Properties -->
     <title>VillageMED</title>
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/en/public/stylesheets/staff.css">
+    <link rel="stylesheet" href="/ht/public/stylesheets/staff.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="/villagemed/public/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -173,7 +173,7 @@ session_start();
     if(is_post_request()){
       if(strcmp($_POST['pswd_'], $_POST['pswd_confirmed']) == 0){
         edit_account_settings();
-        header("Location: /en/public/staff/index.php");
+        header("Location: /ht/public/staff/index.php");
       }
       else{
         echo '<script type="text/javascript"> displayError1(); </script>';

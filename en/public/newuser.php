@@ -16,7 +16,7 @@ session_cache_limiter("private_no_expire");
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/en/public/stylesheets/staff.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/en/public/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/villagemed/public/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
 
@@ -150,23 +150,14 @@ session_cache_limiter("private_no_expire");
           <div id="alert1" class="alert alert-danger" role="alert" style="display: none; margin-top: 5%;">
       Passwords do not match
     </div>
-    <div id="alert2" class="alert alert-danger" role="alert" style="display: none; margin-top: 5%;">
-      User already exists. Please login
-    </div>
     <script type="text/javascript">
     function displayError1(){
       document.getElementById("alert1").style.display = "block";
     }
-    function displayError2(){
-      document.getElementById("alert2").style.display = "block";
-    }
     </script>
     <?php
     if(is_post_request()){
-      if(user_exists($_POST['email_address'])){
-        echo '<script type="text/javascript"> displayError2(); </script>';
-      }
-      else if(strcmp($_POST['password_'], $_POST['password_confirmed']) == 0){
+      if(strcmp($_POST['password_'], $_POST['password_confirmed']) == 0){
          register_new_user();
          header("Location: /en/public");
       }
